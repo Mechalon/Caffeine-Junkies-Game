@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shooter", "Shooter\Shooter\Shooter.csproj", "{2AB65AB6-AC81-43F2-B43F-069C858E423C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShooterContent", "Shooter\ShooterContent\ShooterContent.contentproj", "{301A0986-067D-486C-9FDE-689861944A3A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|Windows Phone = Debug|Windows Phone
+		Debug|x86 = Debug|x86
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|Windows Phone = Release|Windows Phone
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2AB65AB6-AC81-43F2-B43F-069C858E423C}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{2AB65AB6-AC81-43F2-B43F-069C858E423C}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{2AB65AB6-AC81-43F2-B43F-069C858E423C}.Debug|Windows Phone.ActiveCfg = Debug|x86
+		{2AB65AB6-AC81-43F2-B43F-069C858E423C}.Debug|Windows Phone.Build.0 = Debug|x86
+		{2AB65AB6-AC81-43F2-B43F-069C858E423C}.Debug|x86.ActiveCfg = Debug|x86
+		{2AB65AB6-AC81-43F2-B43F-069C858E423C}.Debug|x86.Build.0 = Debug|x86
+		{2AB65AB6-AC81-43F2-B43F-069C858E423C}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{2AB65AB6-AC81-43F2-B43F-069C858E423C}.Release|Mixed Platforms.Build.0 = Release|x86
+		{2AB65AB6-AC81-43F2-B43F-069C858E423C}.Release|Windows Phone.ActiveCfg = Release|x86
+		{2AB65AB6-AC81-43F2-B43F-069C858E423C}.Release|Windows Phone.Build.0 = Release|x86
+		{2AB65AB6-AC81-43F2-B43F-069C858E423C}.Release|x86.ActiveCfg = Release|x86
+		{2AB65AB6-AC81-43F2-B43F-069C858E423C}.Release|x86.Build.0 = Release|x86
+		{301A0986-067D-486C-9FDE-689861944A3A}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{301A0986-067D-486C-9FDE-689861944A3A}.Debug|Windows Phone.ActiveCfg = Debug|x86
+		{301A0986-067D-486C-9FDE-689861944A3A}.Debug|x86.ActiveCfg = Debug|x86
+		{301A0986-067D-486C-9FDE-689861944A3A}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{301A0986-067D-486C-9FDE-689861944A3A}.Release|Windows Phone.ActiveCfg = Release|x86
+		{301A0986-067D-486C-9FDE-689861944A3A}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
