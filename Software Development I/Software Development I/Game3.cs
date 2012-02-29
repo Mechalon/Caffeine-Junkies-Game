@@ -16,7 +16,8 @@ namespace Software_Development_I
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        private LevelLayer interactiveLayer;
+
+        TileMap testLevel;
 
         public Game3()
         {
@@ -32,11 +33,18 @@ namespace Software_Development_I
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            interactiveLayer = new LevelLayer(
-                Content.Load<Texture2D>("input1"),
-                Content.RootDirectory);
-            interactiveLayer.OpenMap("testlevel");
 
+            /*
+             * This is the code to read in levels.
+             * The constructor reads in the map data file (.map) located in Content\MapData
+             * that is specified by the Content.RootDirectory that is set in the Game3
+             * constructor. It also reads in the tile set data and creates a Tile class
+             * within the TileMap class that uses the texture that is given to, in this
+             * case, tiles and defines the dimensions of each tile in the tile set texture.             * 
+             */
+            Texture2D tiles = Content.Load<Texture2D>(@"Textures\TileSets\part2_tileset");
+            testLevel = new TileMap("testlevel", Content.RootDirectory, tiles, 48, 48);
+            
             base.LoadContent();
         } //end LoadContent
 
@@ -47,14 +55,21 @@ namespace Software_Development_I
 
         protected override void Update(GameTime gameTime)
         {
+            KeyboardState currKeyState = Keyboard.GetState();
+            if (currKeyState.IsKeyDown(Keys.Escape))
+                this.Exit();
+
             base.Update(gameTime);
         } //end Update
 
         protected override void Draw(GameTime gameTime)
         {
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+
             spriteBatch.Begin();
-            interactiveLayer.Draw(spriteBatch);
+            testLevel.Draw(spriteBatch);
             spriteBatch.End();
+
             base.Draw(gameTime);
         } //end Draw
     } //end class Game3

@@ -110,10 +110,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animation.cs" />
+    <Compile Include="Camera.cs" />
+    <Compile Include="Enemy.cs" />
+    <Compile Include="Game2.cs" />
+    <Compile Include="Game3.cs" />
+    <Compile Include="LevelLayer.cs" />
+    <Compile Include="MapCell.cs" />
     <Compile Include="PhysicsGameObject.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Tile.cs" />
+    <Compile Include="TileMap.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
