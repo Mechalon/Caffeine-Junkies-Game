@@ -42,8 +42,8 @@ namespace Software_Development_I
              * within the TileMap class that uses the texture that is given to, in this
              * case, tiles and defines the dimensions of each tile in the tile set texture.             * 
              */
-            Texture2D tiles = Content.Load<Texture2D>(@"Textures\TileSets\part2_tileset");
-            testLevel = new TileMap("testlevel", Content.RootDirectory, tiles, 48, 48);
+            Texture2D tiles = Content.Load<Texture2D>(@"Textures\TileSets\input1");
+            testLevel = new TileMap("testlevel", Content.RootDirectory, tiles, 32, 32);
             
             base.LoadContent();
         } //end LoadContent
