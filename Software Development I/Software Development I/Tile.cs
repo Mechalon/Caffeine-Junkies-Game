@@ -22,8 +22,8 @@ namespace Software_Development_I
             int tileX = tileIndex % (tileSetTexture.Width / width);
             int tileY = tileIndex / (tileSetTexture.Width / width);
             return new Rectangle(
-                tileX * width,
-                tileY * height,
+                tileX * width + tileX * 2,
+                tileY * height + tileY * 2,
                 width,
                 height);
         } //end GetSourceRectangle
