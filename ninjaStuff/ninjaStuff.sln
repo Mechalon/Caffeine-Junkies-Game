@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ninjaStuff", "ninjaStuff\ninjaStuff\ninjaStuff.csproj", "{30FA4D51-B918-4EC9-83DE-11EFBE2013D9}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "ninjaStuffContent", "ninjaStuff\ninjaStuffContent\ninjaStuffContent.contentproj", "{5BAEDE3D-BD56-42E6-BDC1-8425B84C8363}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{30FA4D51-B918-4EC9-83DE-11EFBE2013D9}.Debug|x86.ActiveCfg = Debug|x86
+		{30FA4D51-B918-4EC9-83DE-11EFBE2013D9}.Debug|x86.Build.0 = Debug|x86
+		{30FA4D51-B918-4EC9-83DE-11EFBE2013D9}.Release|x86.ActiveCfg = Release|x86
+		{30FA4D51-B918-4EC9-83DE-11EFBE2013D9}.Release|x86.Build.0 = Release|x86
+		{5BAEDE3D-BD56-42E6-BDC1-8425B84C8363}.Debug|x86.ActiveCfg = Debug|x86
+		{5BAEDE3D-BD56-42E6-BDC1-8425B84C8363}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
