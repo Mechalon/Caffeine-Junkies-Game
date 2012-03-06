@@ -137,24 +137,25 @@ namespace ninjaStuff
         private void ProcessKeyboard()
         {
             KeyboardState key = Keyboard.GetState();
+            GamePadState pad = GamePad.GetState(PlayerIndex.One);
             //exit the game when the excape key is pressed
-            if (key.IsKeyDown(Keys.Escape))
+            if (key.IsKeyDown(Keys.Escape) || pad.Buttons.Back == ButtonState.Pressed)
                 Exit();
-            if (key.IsKeyDown(Keys.D))
+            if (key.IsKeyDown(Keys.D) || pad.DPad.Right == ButtonState.Pressed)
                 moveFoward(true);
-            if (key.IsKeyDown(Keys.A))
+            if (key.IsKeyDown(Keys.A) || pad.DPad.Left == ButtonState.Pressed)
                 moveFoward(false);
-            if (key.IsKeyDown(Keys.W) && player.grounded)
+            if (key.IsKeyDown(Keys.W) && player.grounded || pad.Buttons.A == ButtonState.Pressed)
                 jump();
             else if (player.Position.Y < floor)//checks to see if in the air
                 player.grounded = false;
-            if (key.IsKeyDown(Keys.S) && player.grounded)
+            if (key.IsKeyDown(Keys.S) && player.grounded || pad.DPad.Down == ButtonState.Pressed)
                 crouch();
-            if (key.IsKeyDown(Keys.Enter))
+            if (key.IsKeyDown(Keys.Enter) || pad.Buttons.X == ButtonState.Pressed)
                 sword();
-            if (key.IsKeyDown(Keys.Space))
+            if (key.IsKeyDown(Keys.Space) || pad.Buttons.Y == ButtonState.Pressed)
                 star();
-            if (key.IsKeyDown(Keys.Pause))
+            if (key.IsKeyDown(Keys.Pause) || pad.Buttons.Start == ButtonState.Pressed)
                 pause();
             //controls for the player
         }
