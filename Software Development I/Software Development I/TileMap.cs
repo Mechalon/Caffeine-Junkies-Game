@@ -100,15 +100,16 @@ namespace Software_Development_I
                 for (int x = 0; x < squaresHori; x++)
                     foreach (int tileID in rows[firstY + y].columns[firstX + x].baseTiles)
                     {
-                        spriteBatch.Draw(
-                            tileProperties.tileSetTexture,
-                            new Rectangle(
-                                x * tileProperties.width - offsetX,
-                                y * tileProperties.height - offsetY,
-                                tileProperties.width,
-                                tileProperties.height),
-                            tileProperties.GetSourceRectangle(tileID),
-                            Color.White);
+                        if (tileID > 0)
+                            spriteBatch.Draw(
+                                tileProperties.tileSetTexture,
+                                new Rectangle(
+                                    x * tileProperties.width - offsetX,
+                                    y * tileProperties.height - offsetY,
+                                    tileProperties.width,
+                                    tileProperties.height),
+                                tileProperties.GetSourceRectangle(tileID-1),
+                                Color.White);
                     } //end for
         } //end Draw
     } //end class TileMap
