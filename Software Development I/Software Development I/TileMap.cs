@@ -9,17 +9,16 @@ namespace Software_Development_I
 {
     class TileMap
     {
-        Tile tileProperties;
-
+        public Tile tileProperties;
         public List<MapRow> rows = new List<MapRow>();
         public int mapWidth;
         public int mapHeight;
         int squaresHori = 16; //number of squares to display horizontally
         int squaresVert = 8; //number of squares to display vertically
 
-        public TileMap(string mapName, string contentPath, Texture2D tileTexture, int tileWidth, int tileHeight)
+        public TileMap(string mapName, string contentPath, Texture2D tileTexture, int tileWidth, int tileHeight, int spacing)
         {
-            tileProperties = new Tile(tileTexture, tileWidth, tileHeight);
+            tileProperties = new Tile(tileTexture, tileWidth, tileHeight, spacing);
             string path = contentPath + @"\MapData\" + mapName + ".map";
 
             using (StreamReader sr = new StreamReader(path))
@@ -35,6 +34,8 @@ namespace Software_Development_I
                         string[] dimensions = line.Split(',');
                         mapWidth = int.Parse(dimensions[0]);
                         mapHeight = int.Parse(dimensions[1]);
+                        Camera.worldWidth = mapWidth * tileWidth;
+                        Camera.worldHeight = mapHeight * tileHeight;
 
                         for (int y = 0; y < mapHeight; y++)
                         {
@@ -50,7 +51,7 @@ namespace Software_Development_I
                     {
 
                         //second line contains base layer info
-                        if (curY == 1)
+                        if (curY >= 1 && curY <= mapHeight)
                         {
                             int curX = 0;
                             string[] tiles = line.Split(',');
@@ -62,7 +63,7 @@ namespace Software_Development_I
                                 {
                                     int check = int.Parse(tiles[i]);
                                     if (check != 0)
-                                        rows[i / mapWidth].columns[i % mapWidth].tileID = check;
+                                        rows[curY-1].columns[i].tileID = check;
                                 } //end try
                                 catch (Exception) { }
                                 curX++;
@@ -90,14 +91,14 @@ namespace Software_Development_I
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            int firstX = (int)(Camera.location.X / tileProperties.width);
-            int firstY = (int)(Camera.location.Y / tileProperties.height);
+            int firstX = (int)(Camera.Location.X / tileProperties.width);
+            int firstY = (int)(Camera.Location.Y / tileProperties.height);
 
-            int offsetX = (int)(Camera.location.X % tileProperties.width);
-            int offsetY = (int)(Camera.location.Y % tileProperties.height);
+            int offsetX = (int)(Camera.Location.X % tileProperties.width);
+            int offsetY = (int)(Camera.Location.Y % tileProperties.height);
 
-            for (int y = 0; y < squaresVert; y++)
-                for (int x = 0; x < squaresHori; x++)
+            for (int y = 0; y < Camera.viewHeight / tileProperties.height; y++)
+                for (int x = 0; x < Camera.viewWidth / tileProperties.width + 1; x++)
                     foreach (int tileID in rows[firstY + y].columns[firstX + x].baseTiles)
                     {
                         if (tileID > 0)

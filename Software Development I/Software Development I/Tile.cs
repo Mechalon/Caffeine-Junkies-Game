@@ -9,12 +9,14 @@ namespace Software_Development_I
         public Texture2D tileSetTexture;
         public int width;
         public int height;
+        public int spacing;
 
-        public Tile(Texture2D tileSetTexture, int width, int height)
+        public Tile(Texture2D tileSetTexture, int width, int height, int spacing)
         {
             this.tileSetTexture = tileSetTexture;
             this.width = width;
             this.height = height;
+            this.spacing = spacing;
         } //end Tile
 
         public Rectangle GetSourceRectangle(int tileIndex)
@@ -22,8 +24,8 @@ namespace Software_Development_I
             int tileX = tileIndex % (tileSetTexture.Width / width);
             int tileY = tileIndex / (tileSetTexture.Width / width);
             return new Rectangle(
-                tileX * width + tileX * 2,
-                tileY * height + tileY * 2,
+                tileX * width + tileX * spacing,
+                tileY * height + tileY * spacing,
                 width,
                 height);
         } //end GetSourceRectangle
