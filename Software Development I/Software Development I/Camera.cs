@@ -4,33 +4,27 @@ namespace Software_Development_I
 {
     static class Camera
     {
-        public static int viewWidth
-        {
-            get;
-            set;
-        } //end viewWidth
-        public static int viewHeight
-        {
-            get;
-            set;
-        } //end viewHeight
-        public static int worldWidth
-        {
-            get;
-            set;
-        } //end worldWidth
-        public static int worldHeight
-        {
-            get;
-            set;
-        } //end worldHeight
+        public static int viewWidth { get; set; }
+        public static int viewHeight { get; set; }
+        public static int worldWidth { get; set; }
+        public static int worldHeight { get; set; }
 
-        public static Vector2 displayOffset
-        {
-            get;
-            set;
-        } //end displayOffset
+        public static Vector2 displayOffset { get; set; }
+
         public static Vector2 location = Vector2.Zero;
+        public static Vector2 Location
+        {
+            get
+            {
+                return location;
+            } //end get
+            set
+            {
+                location = new Vector2(
+                    MathHelper.Clamp(value.X, 0f, worldWidth - viewWidth),
+                    MathHelper.Clamp(value.Y, 0f, worldHeight - viewHeight));
+            } //end get
+        } 
 
         public static Vector2 WorldToScreen(Vector2 worldPosition)
         {
@@ -44,7 +38,7 @@ namespace Software_Development_I
 
         public static void Move(Vector2 offset)
         {
-            location += offset;
+            Location += offset;
         } //end Move
     } //end class Camera
 } //end namespace

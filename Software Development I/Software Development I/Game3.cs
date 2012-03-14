@@ -17,6 +17,8 @@ namespace Software_Development_I
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        int baseOffsetX = -32;
+        int baseOffsetY = -64;
         TileMap testLevel;
 
         public Game3()
@@ -42,8 +44,24 @@ namespace Software_Development_I
              * within the TileMap class that uses the texture that is given to, in this
              * case, tiles and defines the dimensions of each tile in the tile set texture.             * 
              */
-            Texture2D tiles = Content.Load<Texture2D>(@"Textures\TileSets\input1");
-            testLevel = new TileMap("testlevel", Content.RootDirectory, tiles, 32, 32);
+            //Texture2D tiles = Content.Load<Texture2D>(@"Textures\TileSets\input1");
+            //testLevel = new TileMap("testlevel", Content.RootDirectory, tiles, 32, 32, 2);
+            Texture2D tiles2 = Content.Load<Texture2D>(@"Textures\TileSets\input2");
+            testLevel = new TileMap("testleveltwo", Content.RootDirectory, tiles2, 48, 48, 0);
+
+            
+            /*
+             * This is the code to initialize the camera.
+             * ViewWidth and ViewHeight set the viewport in the camera class.
+             * WorldWidth and WorldHeight set the dimensions of the level map.
+             * DisplayOffset helps the camera stay in bounds.
+             */
+            Camera.viewWidth = this.graphics.PreferredBackBufferWidth;
+            Camera.viewHeight = this.graphics.PreferredBackBufferHeight;
+            Camera.worldWidth = testLevel.mapWidth * testLevel.tileProperties.width;
+            Camera.worldHeight = testLevel.mapHeight * testLevel.tileProperties.height;
+            Camera.displayOffset = new Vector2(baseOffsetX, baseOffsetY);
+            Camera.location = Vector2.Zero;
             
             base.LoadContent();
         } //end LoadContent
@@ -58,6 +76,15 @@ namespace Software_Development_I
             KeyboardState currKeyState = Keyboard.GetState();
             if (currKeyState.IsKeyDown(Keys.Escape))
                 this.Exit();
+
+            if (currKeyState.IsKeyDown(Keys.Left))
+                Camera.Move(new Vector2(-2, 0));
+            if (currKeyState.IsKeyDown(Keys.Right))
+                Camera.Move(new Vector2(2, 0));
+            if (currKeyState.IsKeyDown(Keys.Up))
+                Camera.Move(new Vector2(0, -2));
+            if (currKeyState.IsKeyDown(Keys.Down))
+                Camera.Move(new Vector2(0, 2));
 
             base.Update(gameTime);
         } //end Update
