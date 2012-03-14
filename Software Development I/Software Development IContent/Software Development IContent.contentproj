@@ -46,6 +46,10 @@
       <Name>testlevel</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="MapData\testleveltwo.map">
+      <Name>testleveltwo</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Textures\TileSets\input1.png">
@@ -55,15 +59,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\TileSets\part1_tileset.png">
-      <Name>part1_tileset</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Textures\TileSets\part2_tileset.png">
-      <Name>part2_tileset</Name>
+    <Compile Include="Textures\TileSets\input2.png">
+      <Name>input2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
