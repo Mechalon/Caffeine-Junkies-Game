@@ -29,11 +29,14 @@ namespace Software_Development_I
             list.Add(this);
         } //end CheckPoint
 
-        public static void UpdateLastCheckPoint()
+        public static void UpdateLastCheckPoint(int currentLevel)
         {
             for (int i = 0; i < list.Count(); i++)
-                if (list[i].xPos < Player.position.x < list[i].xPos+5)
+                if (list[i].level == currentLevel && list[i].xPos < Player.position.x < list[i].xPos + 5)
+                {
                     last = list[i];
+                    Settings.Save();
+                };
         } //end UpdateLastCheckPoint
 
     } //end CheckPoint

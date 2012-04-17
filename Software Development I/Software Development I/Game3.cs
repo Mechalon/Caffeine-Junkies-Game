@@ -36,20 +36,8 @@ namespace Software_Development_I
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            /*
-             * This is the code to read in levels.
-             * The constructor reads in the map data file (.map) located in Content\MapData
-             * that is specified by the Content.RootDirectory that is set in the Game3
-             * constructor. It also reads in the tile set data and creates a Tile class
-             * within the TileMap class that uses the texture that is given to, in this
-             * case, tiles and defines the dimensions of each tile in the tile set texture.             * 
-             */
-            //Texture2D tiles = Content.Load<Texture2D>(@"Textures\TileSets\input1");
-            //testLevel = new TileMap("testlevel", Content.RootDirectory, tiles, 32, 32, 2);
-            Texture2D tiles2 = Content.Load<Texture2D>(@"Textures\TileSets\input2");
-            testLevel = new TileMap("testleveltwo", Content.RootDirectory, tiles2, 48, 48, 0);
-
-            
+            int currentLevel;
+            TileMap stage = Level.LoadStage(Content, currentLevel.ToString());
             /*
              * This is the code to initialize the camera.
              * ViewWidth and ViewHeight set the viewport in the camera class.
