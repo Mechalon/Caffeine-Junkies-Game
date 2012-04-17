@@ -1,5 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 
+/*
+ * Revise to follow player
+ */
 namespace Software_Development_I
 {
     static class Camera
