@@ -29,6 +29,7 @@ namespace Software_Development_I
             list.Add(this);
         } //end CheckPoint
 
+        /*
         public static void UpdateLastCheckPoint(int currentLevel)
         {
             for (int i = 0; i < list.Count(); i++)
@@ -36,8 +37,8 @@ namespace Software_Development_I
                 {
                     last = list[i];
                     Settings.Save();
-                };
+                }
         } //end UpdateLastCheckPoint
-
+        */
     } //end CheckPoint
 } //end

@@ -24,8 +24,8 @@ namespace Software_Development_I
             set
             {
                 location = new Vector2(
-                    MathHelper.Clamp(value.X, 0f, worldWidth - viewWidth),
-                    MathHelper.Clamp(value.Y, 0f, worldHeight - viewHeight));
+                    MathHelper.Clamp(value.X, 0f, worldWidth - viewWidth-32),
+                    MathHelper.Clamp(value.Y, 0f, worldHeight - viewHeight-32));
             } //end get
         } 
 

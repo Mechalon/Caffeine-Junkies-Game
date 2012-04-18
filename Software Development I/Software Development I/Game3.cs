@@ -19,7 +19,7 @@ namespace Software_Development_I
 
         int baseOffsetX = -32;
         int baseOffsetY = -64;
-        TileMap testLevel;
+        TileMap stage;
 
         public Game3()
         {
@@ -36,8 +36,7 @@ namespace Software_Development_I
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            int currentLevel;
-            TileMap stage = Level.LoadStage(Content, currentLevel.ToString());
+            stage = Level.LoadStage(Content, "testlevel", Assets.testSet);
             /*
              * This is the code to initialize the camera.
              * ViewWidth and ViewHeight set the viewport in the camera class.
@@ -46,8 +45,8 @@ namespace Software_Development_I
              */
             Camera.viewWidth = this.graphics.PreferredBackBufferWidth;
             Camera.viewHeight = this.graphics.PreferredBackBufferHeight;
-            Camera.worldWidth = testLevel.mapWidth * testLevel.tileProperties.width;
-            Camera.worldHeight = testLevel.mapHeight * testLevel.tileProperties.height;
+            Camera.worldWidth = stage.mapWidth * stage.tileProperties.width;
+            Camera.worldHeight = stage.mapHeight * stage.tileProperties.height;
             Camera.displayOffset = new Vector2(baseOffsetX, baseOffsetY);
             Camera.location = Vector2.Zero;
             
@@ -82,7 +81,7 @@ namespace Software_Development_I
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            testLevel.Draw(spriteBatch);
+            stage.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);

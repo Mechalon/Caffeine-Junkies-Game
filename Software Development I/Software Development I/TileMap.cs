@@ -27,7 +27,6 @@ namespace Software_Development_I
                 while (sr.Peek() >= 0)
                 {
                     string line = sr.ReadLine();
-
                     //gets map dimensions and draws a blank map on first read
                     if (curY == 0)
                     {
@@ -97,7 +96,7 @@ namespace Software_Development_I
             int offsetX = (int)(Camera.Location.X % tileProperties.width);
             int offsetY = (int)(Camera.Location.Y % tileProperties.height);
 
-            for (int y = 0; y < Camera.viewHeight / tileProperties.height; y++)
+            for (int y = 0; y < Camera.viewHeight / tileProperties.height + 1; y++)
                 for (int x = 0; x < Camera.viewWidth / tileProperties.width + 1; x++)
                     foreach (int tileID in rows[firstY + y].columns[firstX + x].baseTiles)
                     {

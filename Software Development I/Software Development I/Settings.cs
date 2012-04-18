@@ -6,7 +6,7 @@ namespace Software_Development_I
     static class Settings
     {
         //setting saves
-        public static const string file = ".saveGame";
+        public const string file = ".saveGame";
         public static int masterVolume = 100;
         public static int musicVolume = 100;
         public static int sfxVolume = 100;
@@ -31,7 +31,7 @@ namespace Software_Development_I
                 {
                     String line;
 
-                    //read and save sound
+                    //read and load sound
                     line = read.ReadLine();
                     masterVolume = Convert.ToInt32(line);
                     line = read.ReadLine();
@@ -39,11 +39,11 @@ namespace Software_Development_I
                     line = read.ReadLine();
                     sfxVolume = Convert.ToInt32(line);
 
-                    //read and save level info
+                    //read and load level
                     line = read.ReadLine();
                     levelAchieved = Convert.ToInt32(line);
 
-                    //read and save player info
+                    //read and load player
                     line = read.ReadLine();
                     lives = Convert.ToInt32(line);
                     line = read.ReadLine();
@@ -60,12 +60,15 @@ namespace Software_Development_I
             {
                 using (write = new StreamWriter(@file))
                 {
+                    //write and save sound
                     write.WriteLine(masterVolume.ToString());
                     write.WriteLine(musicVolume.ToString());
                     write.WriteLine(sfxVolume.ToString());
 
+                    //write and save level 
                     write.WriteLine(levelAchieved.ToString());
 
+                    //write and save player
                     write.WriteLine(lives.ToString());
                     write.WriteLine(ammo.ToString());
 
