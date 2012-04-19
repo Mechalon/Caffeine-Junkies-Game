@@ -15,18 +15,31 @@ namespace Software_Development_I
 {
     class StateManager
     {
-        public ContentManager contentPerm;
+        private const int LOADING   = 1;
+        private const int READY     = 2;
+        private const int RUNNING   = 3;
+        private const int PAUSED    = 4;
+        private const int END       = 5;
+        private       int state     = 1;
+
+        public ContentManager contentMain;
         public ContentManager contentTemp;
         public SpriteBatch spriteBatch;
 
+        private int level;
+
         public StateManager(Game game)
         {
-            contentPerm = (ContentManager) game.Services.GetService(typeof(ContentManager));
-            contentPerm.RootDirectory = "Content";
+            contentMain = (ContentManager) game.Services.GetService(typeof(ContentManager));
+            contentMain.RootDirectory = "Content";
             contentTemp = (ContentManager) game.Services.GetService(typeof(ContentManager));
+            contentTemp.RootDirectory = "Level";
             spriteBatch = (SpriteBatch) game.Services.GetService(typeof (SpriteBatch));
 
-            //load content
+            level = 1;
+
+            state = 1;
+            //load main content
 
 
         } //end StateManager

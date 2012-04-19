@@ -16,6 +16,7 @@ namespace Software_Development_I
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        StateManager gameState;
 
         int baseOffsetX = -32;
         int baseOffsetY = -64;
@@ -24,19 +25,12 @@ namespace Software_Development_I
         public Game3()
         {
             graphics = new GraphicsDeviceManager(this);
+            gameState = new StateManager(this);
             Content.RootDirectory = "Content";
         } //end Game3
 
         protected override void Initialize()
         {
-            base.Initialize();
-        } //end Initialize
-
-        protected override void LoadContent()
-        {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            stage = Level.LoadStage(Content, "testlevel", Assets.testSet);
             /*
              * This is the code to initialize the camera.
              * ViewWidth and ViewHeight set the viewport in the camera class.
@@ -49,6 +43,15 @@ namespace Software_Development_I
             Camera.worldHeight = stage.mapHeight * stage.tileProperties.height;
             Camera.displayOffset = new Vector2(baseOffsetX, baseOffsetY);
             Camera.location = Vector2.Zero;
+
+            base.Initialize();
+        } //end Initialize
+
+        protected override void LoadContent()
+        {
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            stage = Level.LoadStage(Content, "testlevel", Assets.testSet);
             
             base.LoadContent();
         } //end LoadContent
@@ -60,6 +63,8 @@ namespace Software_Development_I
 
         protected override void Update(GameTime gameTime)
         {
+
+
             KeyboardState currKeyState = Keyboard.GetState();
             if (currKeyState.IsKeyDown(Keys.Escape))
                 this.Exit();

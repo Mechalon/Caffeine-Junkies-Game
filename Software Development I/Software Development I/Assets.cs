@@ -13,7 +13,7 @@ namespace Software_Development_I
 
         public static void Load(ContentManager Content)
         {
-            testSet = Content.Load<Texture2D>(@"Textures\TileSets\" + "testlevel");
+            testSet = Content.Load<Texture2D>(@"Textures\TileSets\" + "red1");
         } //end Load
     } //end Assets
 } //end

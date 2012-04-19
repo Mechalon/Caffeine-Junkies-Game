@@ -12,6 +12,8 @@ namespace Software_Development_I
         {
             using (Game3 game = new Game3())
             {
+                //Menu stuff here?
+
                 game.Run();
             }
         }
