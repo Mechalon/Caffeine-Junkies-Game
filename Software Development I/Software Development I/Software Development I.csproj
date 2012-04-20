@@ -129,8 +129,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Software Development IContent\Software Development IContent.contentproj">
-      <Name>Software_Development_IContent</Name>
+      <Name>Software Development IContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+      <Project>{3E80FA6B-86E5-4B62-97F7-C72CB3125ABF}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

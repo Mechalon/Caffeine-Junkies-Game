@@ -1,28 +1,49 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
-using System.Linq;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Input;
 
 namespace Software_Development_I
 {
-    static class Level
+    class Level :IDisposable
     {
-        public static ContentManager levelContent;
-            /*
-             *
-             */
-        public static TileMap LoadStage(ContentManager Content, string levelName, Texture2D tileSheet)
-        {
-            levelContent.RootDirectory = "Content";
-            return new TileMap(levelName, Content.RootDirectory, tileSheet, 32, 32, 2);
-        } //end LoadStage
+        public ContentManager content;
 
-        public static void DisposeStage()
-        {
+        private TileMap levelMap;
+        private SoundEffect exampleSound;
 
+        #region Loading
+
+        /// <summary>
+        /// Creates a new level
+        /// </summary>
+        /// <param name="service">
+        /// Service provider used for a ContentManager
+        /// </param>
+        /// <param name="filePath">
+        /// String of path to file containing tile placement data
+        /// </param>
+
+        public Level(IServiceProvider service, String filePath, int levelIndex)
+        {
+            //Create content manager for current level.
+            content = new ContentManager(service, "Content");
+
+            //Load level map
+            levelMap = new TileMap(filePath, content.Load<Texture2D>("Tiles/tiles"), 32, 32, 2);
+
+            //Load sounds
+            exampleSound = content.Load<SoundEffect>("Sounds/example");
+        } //end Level
+
+        public void Dispose()
+        {
+            content.Unload();
         } //end DisposeStage()
 
         /* This is the code to set player on the stage.

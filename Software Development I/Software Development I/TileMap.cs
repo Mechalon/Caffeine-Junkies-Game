@@ -16,12 +16,11 @@ namespace Software_Development_I
         int squaresHori = 16; //number of squares to display horizontally
         int squaresVert = 8; //number of squares to display vertically
 
-        public TileMap(string mapName, string contentPath, Texture2D tileTexture, int tileWidth, int tileHeight, int spacing)
+        public TileMap(string levelPath, Texture2D tileTexture, int tileWidth, int tileHeight, int spacing)
         {
             tileProperties = new Tile(tileTexture, tileWidth, tileHeight, spacing);
-            string path = contentPath + @"\MapData\" + mapName + ".map";
 
-            using (StreamReader sr = new StreamReader(path))
+            using (StreamReader sr = new StreamReader(levelPath))
             {
                 int curY = 0;
                 while (sr.Peek() >= 0)

@@ -10,10 +10,8 @@ namespace Software_Development_I
         /// </summary>
         static void Main(string[] args)
         {
-            using (Game3 game = new Game3())
+            using (NinjaGame game = new NinjaGame())
             {
-                //Menu stuff here?
-
                 game.Run();
             }
         }

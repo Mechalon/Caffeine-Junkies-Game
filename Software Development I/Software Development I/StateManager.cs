@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,49 +16,50 @@ namespace Software_Development_I
 {
     class StateManager
     {
-        private const int LOADING   = 1;
-        private const int READY     = 2;
-        private const int RUNNING   = 3;
-        private const int PAUSED    = 4;
-        private const int END       = 5;
-        private       int state     = 1;
+        private const int RUNNING = 1;
+        private const int PAUSED = 2;
+        private int state;
 
         public ContentManager contentMain;
         public ContentManager contentTemp;
         public SpriteBatch spriteBatch;
 
-        private int level;
+        //Meta-level game state
+        private const int numberOfLevels = 1;
+        private int levelIndex = -1;
+        private Level level;
+        private bool continuePressed;
 
         public StateManager(Game game)
         {
-            contentMain = (ContentManager) game.Services.GetService(typeof(ContentManager));
-            contentMain.RootDirectory = "Content";
-            contentTemp = (ContentManager) game.Services.GetService(typeof(ContentManager));
-            contentTemp.RootDirectory = "Level";
-            spriteBatch = (SpriteBatch) game.Services.GetService(typeof (SpriteBatch));
-
-            level = 1;
-
             state = 1;
-            //load main content
-
-
         } //end StateManager
 
-        void showScene()
+        public void LoadNextLevel()
         {
+            //Set the next level
+            levelIndex = (levelIndex + 1) % numberOfLevels;
 
-        } //end showScene
+            if (level != null)
+                level.Dispose();
 
-        void disposeScene()
+            //Load the level
+            string levelPath = string.Format("Content/Levels/{0}.map", levelIndex);
+            using (Stream fileStream = TitleContainer.OpenStream(levelPath))
+                level = new Level(fileStream, levelIndex);
+
+        } //end LoadNextLevel()
+
+        public void ReloadLevel()
         {
+            levelIndex--;
+            LoadNextLevel();
+        } //end ReloadLevel
 
-        } //end disposeScene
-
-        void switchLevel()
+        public void Update(GameTime gameTime, KeyboardState keyboard, GamePadState gamePad)
         {
-
-        } //end switchLevel
+            level.Update(
+        } //end Update
 
     } //end StateManager
 } //end
