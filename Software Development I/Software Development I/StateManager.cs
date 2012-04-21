@@ -24,42 +24,12 @@ namespace Software_Development_I
         public ContentManager contentTemp;
         public SpriteBatch spriteBatch;
 
-        //Meta-level game state
-        private const int numberOfLevels = 1;
-        private int levelIndex = -1;
-        private Level level;
-        private bool continuePressed;
+        
 
         public StateManager(Game game)
         {
             state = 1;
         } //end StateManager
-
-        public void LoadNextLevel()
-        {
-            //Set the next level
-            levelIndex = (levelIndex + 1) % numberOfLevels;
-
-            if (level != null)
-                level.Dispose();
-
-            //Load the level
-            string levelPath = string.Format("Content/Levels/{0}.map", levelIndex);
-            using (Stream fileStream = TitleContainer.OpenStream(levelPath))
-                level = new Level(fileStream, levelIndex);
-
-        } //end LoadNextLevel()
-
-        public void ReloadLevel()
-        {
-            levelIndex--;
-            LoadNextLevel();
-        } //end ReloadLevel
-
-        public void Update(GameTime gameTime, KeyboardState keyboard, GamePadState gamePad)
-        {
-            level.Update(
-        } //end Update
 
     } //end StateManager
 } //end

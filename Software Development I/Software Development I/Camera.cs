@@ -27,7 +27,20 @@ namespace Software_Development_I
                     MathHelper.Clamp(value.X, 0f, worldWidth - viewWidth-32),
                     MathHelper.Clamp(value.Y, 0f, worldHeight - viewHeight-32));
             } //end get
-        } 
+        }
+
+        public static void InitializeScreen(GraphicsDeviceManager graphics)
+        {
+            Camera.viewWidth = graphics.PreferredBackBufferWidth;
+            Camera.viewHeight = graphics.PreferredBackBufferHeight;
+        } //end InitializeScreen
+
+        public static void InitializeLevel(TileMap levelMap)
+        {
+            Camera.worldWidth = levelMap.mapWidth * levelMap.tileProperties.width;
+            Camera.worldHeight = levelMap.mapHeight * levelMap.tileProperties.height;
+            Camera.location = Vector2.Zero;
+        } //end InitializeLevel
 
         public static Vector2 WorldToScreen(Vector2 worldPosition)
         {

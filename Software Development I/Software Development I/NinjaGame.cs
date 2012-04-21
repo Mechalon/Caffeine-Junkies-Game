@@ -58,18 +58,7 @@ namespace Software_Development_I
 
         protected override void Initialize()
         {
-            /*
-             * This is the code to initialize the camera.
-             * ViewWidth and ViewHeight set the viewport in the camera class.
-             * WorldWidth and WorldHeight set the dimensions of the level map.
-             * DisplayOffset helps the camera stay in bounds.
-             */
-            Camera.viewWidth = this.graphics.PreferredBackBufferWidth;
-            Camera.viewHeight = this.graphics.PreferredBackBufferHeight;
-            Camera.worldWidth = stage.mapWidth * stage.tileProperties.width;
-            Camera.worldHeight = stage.mapHeight * stage.tileProperties.height;
-            Camera.displayOffset = new Vector2(baseOffsetX, baseOffsetY);
-            Camera.location = Vector2.Zero;
+            Camera.InitializeScreen(graphics);
 
             base.Initialize();
         } //end Initialize
@@ -80,11 +69,11 @@ namespace Software_Development_I
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //Load fonts
-            hudFont = Content.Load<SpriteFont>("Fonts/hud");
+            //hudFont = Content.Load<SpriteFont>("Fonts/hud");
 
             //Load overlays
-            winOverlay = Content.Load<Texture2D>("Overlays/win");
-            loseOverlay = Content.Load<Texture2D>("Overlays/lose");
+            //winOverlay = Content.Load<Texture2D>("Overlays/win");
+            //loseOverlay = Content.Load<Texture2D>("Overlays/lose");
 
             try
             {
@@ -108,8 +97,8 @@ namespace Software_Development_I
 
             //Load the level
             string levelPath = string.Format("Content/Levels/{0}.map", levelIndex);
-            using (Stream fileStream = TitleContainer.OpenStream(levelPath))
-                level = new Level(fileStream, levelIndex);
+            
+            level = new Level(Services, levelPath, levelIndex);
 
         } //end LoadNextLevel()
 
@@ -129,7 +118,6 @@ namespace Software_Development_I
             //Get input states and handle input
             HandleInput();
 
-            gameState.Update(gameTime, keyboardState, gamePadState);
 
             base.Update(gameTime);
         } //end Update
@@ -159,7 +147,7 @@ namespace Software_Development_I
 
             spriteBatch.Begin();
             
-            //Level.Draw(gameTime, spriteBatch);
+            level.Draw(gameTime, spriteBatch);
 
             DrawHud();
 

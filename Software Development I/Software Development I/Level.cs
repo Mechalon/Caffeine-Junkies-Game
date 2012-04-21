@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Software_Development_I
 {
-    class Level :IDisposable
+    class Level : IDisposable
     {
         public ContentManager content;
 
@@ -38,13 +38,31 @@ namespace Software_Development_I
             levelMap = new TileMap(filePath, content.Load<Texture2D>("Tiles/tiles"), 32, 32, 2);
 
             //Load sounds
-            exampleSound = content.Load<SoundEffect>("Sounds/example");
+            //exampleSound = content.Load<SoundEffect>("Sounds/example");
+
+            //Initialize Camera
+            Camera.InitializeLevel(levelMap);
         } //end Level
 
         public void Dispose()
         {
             content.Unload();
         } //end DisposeStage()
+
+        #endregion
+
+        #region Draw
+
+        /// <summary>
+        /// Draw the level
+        /// </summary>
+
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            levelMap.Draw(gameTime, spriteBatch);
+        } //end Draw
+
+        #endregion
 
         /* This is the code to set player on the stage.
          * Will take in and xPosition and yPosition and set the player position to

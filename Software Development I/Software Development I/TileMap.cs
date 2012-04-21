@@ -13,8 +13,6 @@ namespace Software_Development_I
         public List<MapRow> rows = new List<MapRow>();
         public int mapWidth;
         public int mapHeight;
-        int squaresHori = 16; //number of squares to display horizontally
-        int squaresVert = 8; //number of squares to display vertically
 
         public TileMap(string levelPath, Texture2D tileTexture, int tileWidth, int tileHeight, int spacing)
         {
@@ -87,7 +85,7 @@ namespace Software_Development_I
             } //end using
         } //end TileMap
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             int firstX = (int)(Camera.Location.X / tileProperties.width);
             int firstY = (int)(Camera.Location.Y / tileProperties.height);
