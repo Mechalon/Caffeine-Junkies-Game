@@ -1,36 +1,73 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
-using System.Linq;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Input;
 
 namespace Software_Development_I
 {
-    static class Level
+    class Level : IDisposable
     {
+        public ContentManager content;
 
-            /*
-             * This is the code to read in levels.
-             * The constructor reads in the map data file (.map) located in Content\MapData
-             * that is specified by the Content.RootDirectory that is set in the Game3
-             * constructor. It also reads in the tile set data and creates a Tile class
-             * within the TileMap class that uses the texture that is given to, in this
-             * case, tiles and defines the dimensions of each tile in the tile set texture.             * 
-             */
-        public static TileMap LoadStage(ContentManager Content, string levelNum)
+        private TileMap levelMap;
+        private SoundEffect exampleSound;
+
+        #region Loading
+
+        /// <summary>
+        /// Creates a new level
+        /// </summary>
+        /// <param name="service">
+        /// Service provider used for a ContentManager
+        /// </param>
+        /// <param name="filePath">
+        /// String of path to file containing tile placement data
+        /// </param>
+
+        public Level(IServiceProvider service, String filePath, int levelIndex)
         {
-            
-            Texture2D tiles = Content.Load<Texture2D>(@"Textures\TileSets\input2");
+            //Create content manager for current level.
+            content = new ContentManager(service, "Content");
 
-            return new TileMap("testlevel" + levelNum, Content.RootDirectory, tiles, 48, 48, 0);
-        } //end LoadStage
+            //Load level map
+            levelMap = new TileMap(filePath, content.Load<Texture2D>("Tiles/tiles"), 32, 32, 2);
+
+            //Load sounds
+            //exampleSound = content.Load<SoundEffect>("Sounds/example");
+
+            //Initialize Camera
+            Camera.InitializeLevel(levelMap);
+        } //end Level
+
+        public void Dispose()
+        {
+            content.Unload();
+        } //end DisposeStage()
+
+        #endregion
+
+        #region Draw
+
+        /// <summary>
+        /// Draw the level
+        /// </summary>
+
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            levelMap.Draw(gameTime, spriteBatch);
+        } //end Draw
+
+        #endregion
 
         /* This is the code to set player on the stage.
          * Will take in and xPosition and yPosition and set the player position to
          * those values.
-         */
+         *
         public static Player LoadPlayer(int xPos, int yPos)
         {
 
@@ -39,10 +76,13 @@ namespace Software_Development_I
         /* This is the code to set enemies on the stage.
          * Will read in a list of Enemies and take the values stored in the list
          * to place various enemies through out the stage.
-         */
+         *
         public static void LoadEnemies(List<Enemies> enemies)
         {
 
         } //end LoadEnemies
+         * 
+         */
+
     } //end Level
 }

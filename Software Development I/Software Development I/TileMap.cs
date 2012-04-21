@@ -13,21 +13,17 @@ namespace Software_Development_I
         public List<MapRow> rows = new List<MapRow>();
         public int mapWidth;
         public int mapHeight;
-        int squaresHori = 16; //number of squares to display horizontally
-        int squaresVert = 8; //number of squares to display vertically
 
-        public TileMap(string mapName, string contentPath, Texture2D tileTexture, int tileWidth, int tileHeight, int spacing)
+        public TileMap(string levelPath, Texture2D tileTexture, int tileWidth, int tileHeight, int spacing)
         {
             tileProperties = new Tile(tileTexture, tileWidth, tileHeight, spacing);
-            string path = contentPath + @"\MapData\" + mapName + ".map";
 
-            using (StreamReader sr = new StreamReader(path))
+            using (StreamReader sr = new StreamReader(levelPath))
             {
                 int curY = 0;
                 while (sr.Peek() >= 0)
                 {
                     string line = sr.ReadLine();
-
                     //gets map dimensions and draws a blank map on first read
                     if (curY == 0)
                     {
@@ -89,7 +85,7 @@ namespace Software_Development_I
             } //end using
         } //end TileMap
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             int firstX = (int)(Camera.Location.X / tileProperties.width);
             int firstY = (int)(Camera.Location.Y / tileProperties.height);
@@ -97,7 +93,7 @@ namespace Software_Development_I
             int offsetX = (int)(Camera.Location.X % tileProperties.width);
             int offsetY = (int)(Camera.Location.Y % tileProperties.height);
 
-            for (int y = 0; y < Camera.viewHeight / tileProperties.height; y++)
+            for (int y = 0; y < Camera.viewHeight / tileProperties.height + 1; y++)
                 for (int x = 0; x < Camera.viewWidth / tileProperties.width + 1; x++)
                     foreach (int tileID in rows[firstY + y].columns[firstX + x].baseTiles)
                     {

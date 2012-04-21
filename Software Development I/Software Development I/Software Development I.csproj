@@ -111,10 +111,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
-    <Compile Include="Game3.cs" />
+    <Compile Include="CheckPoint.cs" />
+    <Compile Include="NinjaGame.cs" />
+    <Compile Include="Level.cs" />
     <Compile Include="MapCell.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="StateManager.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="TileMap.cs" />
   </ItemGroup>
@@ -123,9 +126,10 @@
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Software Development IContent\Software Development IContent.contentproj">
-      <Name>Software_Development_IContent</Name>
+    <ProjectReference Include="..\Software Development IContent\Content.contentproj">
+      <Name>Content</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+      <Project>{3E80FA6B-86E5-4B62-97F7-C72CB3125ABF}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
