@@ -6,6 +6,9 @@ namespace Software_Development_I
     {
         public List<int> baseTiles = new List<int>();
 
+        /// <summary>
+        /// Tile number set/returned for drawing the level. Tile numbers start at top left and increase horizontally then vertically withinthe texture.
+        /// </summary>
         public int tileID
         {
             get
@@ -24,11 +27,23 @@ namespace Software_Development_I
             } //end set
         } //end tileID
 
+        /// <summary>
+        /// Creates a base layer for each cell in the tile map.
+        /// </summary>
+        /// <param name="tileID">
+        /// Tile number used for base layer.
+        /// </param>
         public MapCell(int tileID)
         {
             this.tileID = tileID;
         } //end MapCell
 
+        /// <summary>
+        /// Adds a layer to the Map Cell.
+        /// </summary>
+        /// <param name="tileID">
+        /// Tile number used for additional layer.
+        /// </param>
         public void AddBaseTile(int tileID)
         {
             baseTiles.Add(tileID);
