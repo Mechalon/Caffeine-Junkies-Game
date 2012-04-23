@@ -29,12 +29,21 @@ namespace Software_Development_I
             } //end get
         }
 
+        /// <summary>
+        /// Initializes the screen's width and height.
+        /// </summary>
         public static void InitializeScreen(GraphicsDeviceManager graphics)
         {
             Camera.viewWidth = graphics.PreferredBackBufferWidth;
             Camera.viewHeight = graphics.PreferredBackBufferHeight;
         } //end InitializeScreen
 
+        /// <summary>
+        /// Initializes the screen's min and max positions for the level.
+        /// </summary>
+        /// <param name="levelMap">
+        /// Level the camera is displaying.
+        /// </param>
         public static void InitializeLevel(TileMap levelMap)
         {
             Camera.worldWidth = levelMap.mapWidth * levelMap.tileProperties.width;
@@ -42,16 +51,32 @@ namespace Software_Development_I
             Camera.location = Vector2.Zero;
         } //end InitializeLevel
 
+        /// <summary>
+        /// Returns the position in the game world relative to the screen.
+        /// </summary>
+        /// <param name="worldPosition"></param>
+        /// <returns></returns>
         public static Vector2 WorldToScreen(Vector2 worldPosition)
         {
             return worldPosition - location + displayOffset;
         } //end WorldToScreen
 
+        /// <summary>
+        /// Returns the position of the screen relative to the game world.
+        /// </summary>
+        /// <param name="screenPosition"></param>
+        /// <returns></returns>
         public static Vector2 ScreenToWorld(Vector2 screenPosition)
         {
             return screenPosition + location - displayOffset;
         } //end ScreenToWorld
 
+        /// <summary>
+        /// Allows for camera movement.
+        /// </summary>
+        /// <param name="offset">
+        /// Vector(length/direction) in which the camera is moved.
+        /// </param>
         public static void Move(Vector2 offset)
         {
             Location += offset;
