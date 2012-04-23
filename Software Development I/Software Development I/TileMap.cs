@@ -14,6 +14,24 @@ namespace Software_Development_I
         public int mapWidth;
         public int mapHeight;
 
+        /// <summary>
+        /// Creates a level using Tiles and Map Cells.
+        /// </summary>
+        /// <param name="levelPath">
+        /// Path of the file containing tile placement within the level.
+        /// </param>
+        /// <param name="tileTexture">
+        /// Tile sheet texture used to draw the level.
+        /// </param>
+        /// <param name="tileWidth">
+        /// //Width of each tile in texture.
+        /// </param>
+        /// <param name="tileHeight">
+        /// //Height of each tile in texture.
+        /// </param>
+        /// <param name="spacing">
+        /// //Spacing between each tile in texture.
+        /// </param>
         public TileMap(string levelPath, Texture2D tileTexture, int tileWidth, int tileHeight, int spacing)
         {
             tileProperties = new Tile(tileTexture, tileWidth, tileHeight, spacing);
@@ -85,6 +103,9 @@ namespace Software_Development_I
             } //end using
         } //end TileMap
 
+        /// <summary>
+        /// Draws the Tile Map.
+        /// </summary>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             int firstX = (int)(Camera.Location.X / tileProperties.width);
@@ -111,6 +132,9 @@ namespace Software_Development_I
         } //end Draw
     } //end class TileMap
 
+    /// <summary>
+    /// Used for creating a multi-dimensional list.
+    /// </summary>
     class MapRow
     {
         public List<MapCell> columns = new List<MapCell>();

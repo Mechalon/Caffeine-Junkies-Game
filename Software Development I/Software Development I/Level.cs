@@ -17,6 +17,8 @@ namespace Software_Development_I
         private TileMap levelMap;
         private SoundEffect exampleSound;
 
+        private bool endReached;
+
         #region Loading
 
         /// <summary>
@@ -28,7 +30,6 @@ namespace Software_Development_I
         /// <param name="filePath">
         /// String of path to file containing tile placement data
         /// </param>
-
         public Level(IServiceProvider service, String filePath, int levelIndex)
         {
             //Create content manager for current level.
@@ -44,10 +45,66 @@ namespace Software_Development_I
             Camera.InitializeLevel(levelMap);
         } //end Level
 
+        /// <summary>
+        /// Garbage collection for current level content
+        /// </summary>
         public void Dispose()
         {
             content.Unload();
         } //end DisposeStage()
+
+        #endregion
+
+        #region Update
+
+        /// <summary>
+        /// Updates all objects in the game world
+        /// </summary>
+        public void Update(GameTime gameTime, KeyboardState keyboardState, GamePadState gamePadState)
+        {
+            //if Player.isAlive
+                if (endReached)
+                {
+
+                } //end if
+                else
+                {
+                    //player.Update
+
+                    //if Player.BoundingRectangle.Top is lower than cam bot
+                        //player.OnKilled(null);
+
+                    UpdateEnemies(gameTime);
+
+                    //if player.isAlive && player.isGrounded && player.BoundingRectangle.Contains(exit)
+                        OnEndReached();
+
+                    
+                } //end else
+
+        } //end Update
+
+        /// <summary>
+        /// Animates enemies and checks for player collision
+        /// </summary>
+        private void UpdateEnemies(GameTime gameTime)
+        {
+            //foreach (Enemy enemy in enemies)
+                //enemy.Update(gameTime)
+
+                //if (enemy.BoundingRectangle.Intersects(player.BoundingRectangle))
+                    //player.OnKilled(enemy);
+        } //end UpdateEnemeies
+
+        /// <summary>
+        /// Called when player reaches the end of a level
+        /// </summary>
+        private void OnEndReached()
+        {
+            //player.OnExitReached();
+            //exitReachedSound.Play();
+            endReached = true;
+        } //end OnExitReached
 
         #endregion
 
@@ -56,33 +113,12 @@ namespace Software_Development_I
         /// <summary>
         /// Draw the level
         /// </summary>
-
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             levelMap.Draw(gameTime, spriteBatch);
         } //end Draw
 
         #endregion
-
-        /* This is the code to set player on the stage.
-         * Will take in and xPosition and yPosition and set the player position to
-         * those values.
-         *
-        public static Player LoadPlayer(int xPos, int yPos)
-        {
-
-        } //end LoadPlayer
-
-        /* This is the code to set enemies on the stage.
-         * Will read in a list of Enemies and take the values stored in the list
-         * to place various enemies through out the stage.
-         *
-        public static void LoadEnemies(List<Enemies> enemies)
-        {
-
-        } //end LoadEnemies
-         * 
-         */
 
     } //end Level
 }

@@ -44,8 +44,6 @@ namespace Software_Development_I
         private GamePadState gamePadState;
         private KeyboardState keyboardState;
 
-        int baseOffsetX = -32;
-        int baseOffsetY = -64;
         TileMap stage;
 
         public NinjaGame()
@@ -87,6 +85,9 @@ namespace Software_Development_I
             base.LoadContent();
         } //end LoadContent
 
+        /// <summary>
+        /// Loads the next level.
+        /// </summary>
         public void LoadNextLevel()
         {
             //Set the next level
@@ -102,6 +103,9 @@ namespace Software_Development_I
 
         } //end LoadNextLevel()
 
+        /// <summary>
+        /// Reloads the current level.
+        /// </summary>
         public void ReloadLevel()
         {
             levelIndex--;
@@ -113,15 +117,26 @@ namespace Software_Development_I
             base.UnloadContent();
         } //end UnloadContent
 
+        /// <summary>
+        /// Gather input, update game states, check collision, play audio.
+        /// </summary>
+        /// <param name="gameTime">
+        /// Snapshot of timing values.
+        /// </param>
         protected override void Update(GameTime gameTime)
         {
             //Get input states and handle input
             HandleInput();
 
+            //Update level, passing GameTime and input states.
+            level.Update(gameTime, keyboardState, gamePadState);
 
             base.Update(gameTime);
         } //end Update
 
+        /// <summary>
+        /// Polls input states and handles player input.
+        /// </summary>
         private void HandleInput()
         {
             keyboardState = Keyboard.GetState();
@@ -141,6 +156,12 @@ namespace Software_Development_I
                 Camera.Move(new Vector2(0, 2));
         } //end HandleInput
 
+        /// <summary>
+        /// Draws all the games components.
+        /// </summary>
+        /// <param name="gameTime">
+        /// Snapshot of timing values.
+        /// </param>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
