@@ -4,55 +4,66 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Software_Development_I
 {
+    /// <summary>
+    /// Controls collision detection and behaviors of a tile.
+    /// </summary>
+    enum TileCollision
+    {
+        /// <summary>
+        /// Tile in which the player can pass through freely.
+        /// </summary>
+        Passable = 0,
+
+        /// <summary>
+        /// Tile in which the players' movement is slowed.
+        /// </summary>
+        Slow = 1,
+
+        /// <summary>
+        /// Solid tile in which the player can not pass through at all.
+        /// </summary>
+        Impassable = 2,
+
+        /// <summary>
+        /// Platform tile in which the player can both stand on and pass through.
+        /// </summary>
+        Platform = 3,
+    } //end TileCollision
+
     class Tile
     {
-        public Texture2D tileSetTexture;
-        public int width;
-        public int height;
-        public int spacing;
+        public const int WIDTH = 32;
+        public const int HEIGHT = 32;
+        public const int SPACING = 2;
+        public static readonly Vector2 size = new Vector2(WIDTH, HEIGHT);
+
+        public int tileID;
+        public TileCollision collision;
 
         /// <summary>
-        /// Creates individual tiles from a texture for level drawing.
+        /// Creates a tile. Multiple tiles can be used to construct a level.
         /// </summary>
-        /// <param name="tileSetTexture">
-        /// Texture used to create tile textures.
+        /// <param name="tileID">
+        /// Placement of the tile within the tile sheet.
         /// </param>
-        /// <param name="width">
-        /// Width of the tile.
+        /// <param name="collision">
+        /// Represents the type of player interactions happen with each tile.
         /// </param>
-        /// <param name="height">
-        /// Height of the tile.
-        /// </param>
-        /// <param name="spacing">
-        /// Spacing between each tile.
-        /// </param>
-        public Tile(Texture2D tileSetTexture, int width, int height, int spacing)
+        public Tile(int tileID, TileCollision collision)
         {
-            this.tileSetTexture = tileSetTexture;
-            this.width = width;
-            this.height = height;
-            this.spacing = spacing;
+            this.tileID = tileID;
+            this.collision = collision;
         } //end Tile
 
-        /// <summary>
-        /// Rectangle area within the texture defining the tiles texture.
-        /// </summary>
-        /// <param name="tileIndex">
-        /// The tile number in the texture. Numbering starts at top left and goes horizontal then vertical.
-        /// </param>
-        /// <returns>
-        /// Returns the rectangle from texture.
-        /// </returns>
-        public Rectangle GetSourceRectangle(int tileIndex)
+        public Rectangle GetSourceRectangle(Texture2D texture)
         {
-            int tileX = tileIndex % (tileSetTexture.Width / width);
-            int tileY = tileIndex / (tileSetTexture.Width / width);
+            int tileX = (tileID-1) % (texture.Width / WIDTH);
+            int tileY = (tileID-1) / (texture.Width / WIDTH);
             return new Rectangle(
-                tileX * width + tileX * spacing,
-                tileY * height + tileY * spacing,
-                width,
-                height);
-        } //end GetSourceRectangle
-            
-    } //end class Tile
+                tileX * WIDTH + tileX * SPACING,
+                tileY * HEIGHT + tileY * SPACING,
+                WIDTH,
+                HEIGHT);
+        }
+    } //end Tile
 } //end namespace

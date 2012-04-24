@@ -12,12 +12,32 @@ namespace Software_Development_I
 {
     class Level : IDisposable
     {
-        public ContentManager content;
+        #region Variables
+
+        public ContentManager Content
+        {
+            get { return content; }
+        }
+        ContentManager content;
+
+        public Player Player
+        {
+            get { return player; }
+        }
+        Player player;
+
+        public bool EndReached
+        {
+            get { return endReached; }
+        }
+        bool endReached;
 
         private TileMap levelMap;
+        private Vector2 start;
+        private Point end = new Point(-1, -1);
         private SoundEffect exampleSound;
 
-        private bool endReached;
+        #endregion
 
         #region Loading
 
@@ -36,13 +56,15 @@ namespace Software_Development_I
             content = new ContentManager(service, "Content");
 
             //Load level map
-            levelMap = new TileMap(filePath, content.Load<Texture2D>("Tiles/tiles"), 32, 32, 2);
+            levelMap = new TileMap(filePath, content.Load<Texture2D>("Tiles/tiles"));
 
+            
             //Load sounds
             //exampleSound = content.Load<SoundEffect>("Sounds/example");
 
             //Initialize Camera
             Camera.InitializeLevel(levelMap);
+            player = new Player(this, Camera.Location);
         } //end Level
 
         /// <summary>
@@ -55,6 +77,20 @@ namespace Software_Development_I
 
         #endregion
 
+        #region Collision
+
+        public TileCollision GetCollision(int x, int y)
+        {
+            return levelMap.rows[y].columns[x].collision;
+        } //end GetCollision
+
+        public Rectangle GetBounds(int x, int y)
+        {
+            return new Rectangle(x * Tile.WIDTH, y * Tile.HEIGHT, Tile.WIDTH, Tile.HEIGHT);
+        } //end GetBounds
+
+        #endregion
+
         #region Update
 
         /// <summary>
@@ -62,21 +98,23 @@ namespace Software_Development_I
         /// </summary>
         public void Update(GameTime gameTime, KeyboardState keyboardState, GamePadState gamePadState)
         {
-            //if Player.isAlive
+            if (Player.Alive)
                 if (endReached)
                 {
 
                 } //end if
                 else
                 {
-                    //player.Update
+                    Player.Update(gameTime, keyboardState, gamePadState);
+
+                    
 
                     //if Player.BoundingRectangle.Top is lower than cam bot
                         //player.OnKilled(null);
 
                     UpdateEnemies(gameTime);
 
-                    //if player.isAlive && player.isGrounded && player.BoundingRectangle.Contains(exit)
+                    if (Player.Alive && Player.Grounded && Player.BoundingRectangle.Contains(end))
                         OnEndReached();
 
                     
