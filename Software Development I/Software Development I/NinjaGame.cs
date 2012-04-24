@@ -31,9 +31,6 @@ namespace Software_Development_I
         private Texture2D winOverlay;
         private Texture2D loseOverlay;
 
-        //Game state for level switches
-        private StateManager gameState;
-
         //Meta-level game state
         private const int numberOfLevels = 1;
         private int levelIndex = -1;
@@ -50,9 +47,7 @@ namespace Software_Development_I
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
-            gameState = new StateManager(this);
-        } //end Game3
+        } //end NinjaGame
 
         protected override void Initialize()
         {
@@ -181,5 +176,6 @@ namespace Software_Development_I
         {
 
         } //end DrawHud
-    } //end class Game3
+
+    } //end NinjaGame
 } //end namespace
