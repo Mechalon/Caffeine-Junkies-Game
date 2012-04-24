@@ -46,8 +46,8 @@ namespace Software_Development_I
         /// </param>
         public static void InitializeLevel(TileMap levelMap)
         {
-            Camera.worldWidth = levelMap.mapWidth * levelMap.tileProperties.width;
-            Camera.worldHeight = levelMap.mapHeight * levelMap.tileProperties.height;
+            Camera.worldWidth = levelMap.mapWidth * Tile.WIDTH;
+            Camera.worldHeight = levelMap.mapHeight * Tile.HEIGHT;
             Camera.location = Vector2.Zero;
         } //end InitializeLevel
 

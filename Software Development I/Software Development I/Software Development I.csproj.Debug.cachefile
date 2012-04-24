@@ -1,3 +1,8 @@
 Content\Tiles\tiles.xnb
 Content\Tiles\tilesred.xnb
+Content\Sprites\Player\Win.xnb
+Content\Sprites\Player\Die.xnb
+Content\Sprites\Player\Idle.xnb
+Content\Sprites\Player\Jump.xnb
+Content\Sprites\Player\Run.xnb
 Content\Levels\0.map

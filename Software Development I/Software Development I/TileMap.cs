@@ -9,7 +9,7 @@ namespace Software_Development_I
 {
     class TileMap
     {
-        public Tile tileProperties;
+        public Texture2D tileSheet;
         public List<MapRow> rows = new List<MapRow>();
         public int mapWidth;
         public int mapHeight;
@@ -32,9 +32,9 @@ namespace Software_Development_I
         /// <param name="spacing">
         /// //Spacing between each tile in texture.
         /// </param>
-        public TileMap(string levelPath, Texture2D tileTexture, int tileWidth, int tileHeight, int spacing)
+        public TileMap(string levelPath, Texture2D tileSheet)
         {
-            tileProperties = new Tile(tileTexture, tileWidth, tileHeight, spacing);
+            this.tileSheet = tileSheet;
 
             using (StreamReader sr = new StreamReader(levelPath))
             {
@@ -48,15 +48,15 @@ namespace Software_Development_I
                         string[] dimensions = line.Split(',');
                         mapWidth = int.Parse(dimensions[0]);
                         mapHeight = int.Parse(dimensions[1]);
-                        Camera.worldWidth = mapWidth * tileWidth;
-                        Camera.worldHeight = mapHeight * tileHeight;
+                        Camera.worldWidth = mapWidth * Tile.WIDTH;
+                        Camera.worldHeight = mapHeight * Tile.HEIGHT;
 
                         for (int y = 0; y < mapHeight; y++)
                         {
                             MapRow newRow = new MapRow();
                             for (int x = 0; x < mapWidth; x++)
                             {
-                                newRow.columns.Add(new MapCell(0));
+                                newRow.columns.Add(new Tile(0, TileCollision.Passable));
                             } //end for
                             rows.Add(newRow);
                         } //end for
@@ -77,26 +77,15 @@ namespace Software_Development_I
                                 {
                                     int check = int.Parse(tiles[i]);
                                     if (check != 0)
-                                        rows[curY-1].columns[i].tileID = check;
+                                    {
+                                        rows[curY - 1].columns[i].tileID = check;
+                                        rows[curY - 1].columns[i].collision = TileCollision.Impassable;
+                                    } //end if
                                 } //end try
                                 catch (Exception) { }
                                 curX++;
                             } //end for
                         } //end if
-
-                        //other lines contain additional layer info
-                        else
-                        {
-                            string[] tiles = line.Split(',');
-                            try
-                            {
-                                int colValue = int.Parse(tiles[0]);
-                                int rowValue = int.Parse(tiles[1]);
-                                int tileValue = int.Parse(tiles[2]);
-                                rows[rowValue].columns[colValue].AddBaseTile(tileValue);
-                            } //end try
-                            catch (Exception) { }
-                        } //end else
                     } //end else
                     curY++;
                 } //end while
@@ -108,27 +97,26 @@ namespace Software_Development_I
         /// </summary>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            int firstX = (int)(Camera.Location.X / tileProperties.width);
-            int firstY = (int)(Camera.Location.Y / tileProperties.height);
+            int firstX = (int)(Camera.Location.X / Tile.WIDTH);
+            int firstY = (int)(Camera.Location.Y / Tile.HEIGHT);
 
-            int offsetX = (int)(Camera.Location.X % tileProperties.width);
-            int offsetY = (int)(Camera.Location.Y % tileProperties.height);
+            int offsetX = (int)(Camera.Location.X % Tile.WIDTH);
+            int offsetY = (int)(Camera.Location.Y % Tile.HEIGHT);
 
-            for (int y = 0; y < Camera.viewHeight / tileProperties.height + 1; y++)
-                for (int x = 0; x < Camera.viewWidth / tileProperties.width + 1; x++)
-                    foreach (int tileID in rows[firstY + y].columns[firstX + x].baseTiles)
-                    {
-                        if (tileID > 0)
-                            spriteBatch.Draw(
-                                tileProperties.tileSetTexture,
-                                new Rectangle(
-                                    x * tileProperties.width - offsetX,
-                                    y * tileProperties.height - offsetY,
-                                    tileProperties.width,
-                                    tileProperties.height),
-                                tileProperties.GetSourceRectangle(tileID-1),
-                                Color.White);
-                    } //end for
+            for (int y = 0; y < Camera.viewHeight / Tile.HEIGHT + 1; y++)
+                for (int x = 0; x < Camera.viewWidth / Tile.WIDTH + 1; x++)
+                    
+                    if (rows[firstY + y].columns[firstX + x].tileID > 0)
+                        spriteBatch.Draw(
+                            tileSheet,
+                            new Rectangle(
+                                x * Tile.WIDTH - offsetX,
+                                y * Tile.HEIGHT - offsetY,
+                                Tile.WIDTH,
+                                Tile.HEIGHT),
+                            rows[firstY + y].columns[firstX + x].GetSourceRectangle(tileSheet),
+                            Color.White);
+                    
         } //end Draw
     } //end class TileMap
 
@@ -137,6 +125,6 @@ namespace Software_Development_I
     /// </summary>
     class MapRow
     {
-        public List<MapCell> columns = new List<MapCell>();
+        public List<Tile> columns = new List<Tile>();
     } //end class MapRow
 } //end namespace
