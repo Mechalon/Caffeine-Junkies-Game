@@ -1,8 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-
+﻿#region File Description
 /*
- * Revise to follow player
+ * Camera.cs
+ * Created by Forrest
  */
+#endregion
+using Microsoft.Xna.Framework;
+
 namespace Software_Development_I
 {
     static class Camera
@@ -24,8 +27,8 @@ namespace Software_Development_I
             set
             {
                 location = new Vector2(
-                    MathHelper.Clamp(value.X, 0f, worldWidth - viewWidth-32),
-                    MathHelper.Clamp(value.Y, 0f, worldHeight - viewHeight-32));
+                    MathHelper.Clamp(value.X, 0f, worldWidth - viewWidth - Tile.WIDTH),
+                    MathHelper.Clamp(value.Y, 0f, worldHeight - viewHeight - Tile.HEIGHT));
             } //end get
         }
 
@@ -51,35 +54,5 @@ namespace Software_Development_I
             Camera.location = Vector2.Zero;
         } //end InitializeLevel
 
-        /// <summary>
-        /// Returns the position in the game world relative to the screen.
-        /// </summary>
-        /// <param name="worldPosition"></param>
-        /// <returns></returns>
-        public static Vector2 WorldToScreen(Vector2 worldPosition)
-        {
-            return worldPosition - location + displayOffset;
-        } //end WorldToScreen
-
-        /// <summary>
-        /// Returns the position of the screen relative to the game world.
-        /// </summary>
-        /// <param name="screenPosition"></param>
-        /// <returns></returns>
-        public static Vector2 ScreenToWorld(Vector2 screenPosition)
-        {
-            return screenPosition + location - displayOffset;
-        } //end ScreenToWorld
-
-        /// <summary>
-        /// Allows for camera movement.
-        /// </summary>
-        /// <param name="offset">
-        /// Vector(length/direction) in which the camera is moved.
-        /// </param>
-        public static void Move(Vector2 offset)
-        {
-            Location += offset;
-        } //end Move
     } //end class Camera
 } //end namespace
