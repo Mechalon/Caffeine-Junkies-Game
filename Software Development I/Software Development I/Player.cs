@@ -1,6 +1,7 @@
 ﻿#region File Description
 /*
  * Player.cs
+ * Created by Forrest
  * 
  * Creates and manages the player or players.
  */
@@ -33,40 +34,46 @@ namespace Software_Development_I
         private const float GRAVITY = 3400.0f;
         private const float MAXFALLSPEED = 550.0f;
         private const float JUMPCONTROL = 0.14f;
-        
+
+        Level level;
         public Level Level
         {
             get { return level; }
         }
-        Level level;
+        
+        int lives;
+        public int Lives
+        {
+            get { return lives; }
+        }
 
+        bool alive;
         public bool Alive
         {
             get { return alive; }
         }
-        bool alive;
 
+        bool grounded;
         public bool Grounded
         {
             get { return grounded; }
         }
-        bool grounded;
 
+        Vector2 position;
         public Vector2 Position
         {
             get { return position; }
             set { position = value; }
         }
-        Vector2 position;
 
+        Vector2 velocity;
         public Vector2 Velocity
         {
             get { return velocity; }
             set { velocity = value; }
         }
-        Vector2 velocity;
-
-        public Rectangle BoundingRectangle
+        
+        public Rectangle BoundingBox
         {
             get
             {
@@ -83,12 +90,10 @@ namespace Software_Development_I
         private Animation jump;
         private Animation win;
         private Animation death;
-        private AnimationChanging sprite;
+        private AnimationSystem sprite;
         private SpriteEffects flip = SpriteEffects.None;
 
-        //Sound        
-        private SoundEffect jumpSound;
-        private SoundEffect fallSound;
+        //Sound
         private SoundEffect deathSound;
 
         //Movement
@@ -96,6 +101,7 @@ namespace Software_Development_I
         private bool jumping;
         private bool wasJumping;
         private float jumpTime;
+        private float lastBottom;
         private Rectangle localBounds;
 
         #endregion
@@ -114,8 +120,8 @@ namespace Software_Development_I
         public Player(Level level, Vector2 position)
         {
             this.level = level;
+            lives = 3;
 
-            //Load Player content:
             idle = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Idle"), 0.1f, true);
             run = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Run"), 0.1f, true);
             jump = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Jump"), 0.1f, false);
@@ -127,7 +133,9 @@ namespace Software_Development_I
             int height = (int)(idle.FrameWidth * 0.8);
             int top = idle.FrameHeight - height;
             localBounds = new Rectangle(left, top, width, height);
-            //Sounds
+
+
+            //deathSound = Level.Content.Load<SoundEffect>("Sounds/PlayerKilled");
 
             Reset(position);
 
@@ -156,8 +164,12 @@ namespace Software_Development_I
         /// </summary>
         public void Update(GameTime gameTime, KeyboardState keyboardState, GamePadState gamePadState)
         {
-            GetInput(keyboardState, gamePadState);
+            ReadInput(keyboardState, gamePadState);
             ApplyPhysics(gameTime);
+
+            Camera.Location = new Vector2(
+                MathHelper.Clamp(Camera.Location.X, Position.X - Camera.viewWidth * 3/4 , Position.X - Camera.viewWidth /  4),
+                MathHelper.Clamp(Camera.Location.Y, Position.Y - Camera.viewHeight * 3/8, Position.Y - Camera.viewHeight / 8));
 
             if (Alive && Grounded)
                 if (Math.Abs(Velocity.X) - 0.02f > 0)
@@ -173,7 +185,7 @@ namespace Software_Development_I
         /// <summary>
         /// Handles input for horizontal movement and jumps.
         /// </summary>
-        public void GetInput(KeyboardState keyboardState, GamePadState gamePadState)
+        public void ReadInput(KeyboardState keyboardState, GamePadState gamePadState)
         {
             //360 Controller movements
             movement = gamePadState.ThumbSticks.Left.X;
@@ -244,7 +256,7 @@ namespace Software_Development_I
                     //play jump sound if new jump
 
                     jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
+                    sprite.PlayAnimation(jump);
                     //animate jump
 
                 } //end if
@@ -270,6 +282,49 @@ namespace Software_Development_I
         /// </summary>
         private void HandleCollisions()
         {
+            Rectangle playerBounds = BoundingBox;
+            int leftTile = (int)Math.Floor((float)playerBounds.Left / Tile.WIDTH);
+            int rightTile = (int)Math.Ceiling(((float)playerBounds.Right / Tile.WIDTH)) - 1;
+            int topTile = (int)Math.Floor((float)playerBounds.Top / Tile.HEIGHT);
+            int bottomTile = (int)Math.Ceiling(((float)playerBounds.Bottom / Tile.HEIGHT)) - 1;
+
+            grounded = false;
+
+            for (int y = topTile; y <= bottomTile; ++y)
+                for (int x = leftTile; x <= rightTile; ++x)
+                {
+                    TileCollision collision = Level.GetCollision(x, y);
+                    if (collision != TileCollision.Passable)
+                    {
+                        Rectangle tileBounds = Level.GetBounds(x, y);
+                        Vector2 intersectDepth = RectangleExtensions.GetIntersectionDepth(playerBounds, tileBounds);
+                        
+                        //if intersecting
+                        if (intersectDepth != Vector2.Zero)
+                        {
+                            float depthX = Math.Abs(intersectDepth.X);
+                            float depthY = Math.Abs(intersectDepth.Y);
+
+                            if (depthX > depthY || collision == TileCollision.Platform)
+                            {
+                                if (lastBottom <= tileBounds.Top)
+                                    grounded = true;
+
+                                if (collision == TileCollision.Impassable || grounded)
+                                {
+                                    Position = new Vector2(Position.X, Position.Y + intersectDepth.Y);
+                                    playerBounds = BoundingBox;
+                                } //endif
+                            } //end if
+                            else if (collision == TileCollision.Impassable)
+                            {
+                                Position = new Vector2(Position.X + intersectDepth.X, Position.Y);
+                                playerBounds = BoundingBox;
+                            } //end if
+                        } //end if
+                    } //end if
+                } //end for
+            lastBottom = playerBounds.Bottom;
 
         } //end HandleCollsions
         #endregion
@@ -280,21 +335,22 @@ namespace Software_Development_I
         /// Called when the player is killed. By enemy or falling.
         /// </summary>
         /// <param name="killedBy">The enemy that killed the player.</param>
-        //        public void OnDeath(Enemy killedBy)
-        //        {
-        //            alive = false;
+        public void OnDeath()
+        {
+            alive = false;
+            lives--;
 
-        //play fall or death sound
+            //deathSound.Play();
 
-        //animate
-        //        } //end OnDeath
+            sprite.PlayAnimation(death);
+        } //end OnDeath
 
         /// <summary>
         /// Called when player reaches the end of a level.
         /// </summary>
         public void OnWin()
         {
-            //animate
+            sprite.PlayAnimation(win);
         } //end OnWin
 
         #endregion
@@ -306,12 +362,12 @@ namespace Software_Development_I
         /// </summary>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (Velocity.X > 0.0f)
+            if (Velocity.X < 0.0f)
                 flip = SpriteEffects.None;
-            else if (Velocity.X < 0.0f)
+            else if (Velocity.X > 0.0f)
                 flip = SpriteEffects.FlipHorizontally;
 
-            sprite.Draw(gameTime, spriteBatch, Position, flip);
+            sprite.Draw(gameTime, spriteBatch, Position - Camera.Location, flip);
         } //end Draw
 
         #endregion
