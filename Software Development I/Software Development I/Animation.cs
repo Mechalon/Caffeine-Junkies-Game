@@ -1,11 +1,14 @@
-﻿using System;
+﻿#region File Description
+/*
+ * Animation.cs
+ * Created by Forrest
+ */
+#endregion
+using System;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Software_Development_I
 {
-    /// <summary>
-    /// Animates a texture using keyframes.
-    /// </summary>
     class Animation
     {
         #region Variables

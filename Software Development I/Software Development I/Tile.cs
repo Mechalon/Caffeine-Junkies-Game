@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+﻿#region File Description
+/*
+ * Tile.cs
+ * Created by Forrest
+ */
+#endregion
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -28,6 +34,11 @@ namespace Software_Development_I
         /// Platform tile in which the player can both stand on and pass through.
         /// </summary>
         Platform = 3,
+
+        /// <summary>
+        /// Tile that kills a player.
+        /// </summary>
+        Death = 4,
     } //end TileCollision
 
     class Tile

@@ -1,8 +1,8 @@
 ﻿#region File Description
 /*
  * NinjaGame.cs
- * 
- * Main game file.
+ * Created by XNA
+ * Modified by Forrest
  */
 #endregion
 
@@ -41,7 +41,6 @@ namespace Software_Development_I
         private GamePadState gamePadState;
         private KeyboardState keyboardState;
 
-        TileMap stage;
 
         public NinjaGame()
         {
@@ -141,14 +140,11 @@ namespace Software_Development_I
                 gamePadState.Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            if (keyboardState.IsKeyDown(Keys.Left))
-                Camera.Move(new Vector2(-2, 0));
-            if (keyboardState.IsKeyDown(Keys.Right))
-                Camera.Move(new Vector2(2, 0));
-            if (keyboardState.IsKeyDown(Keys.Up))
-                Camera.Move(new Vector2(0, -2));
-            if (keyboardState.IsKeyDown(Keys.Down))
-                Camera.Move(new Vector2(0, 2));
+            if (!level.Player.Alive)
+                if (level.Player.Lives > 0)
+                    level.NewLife();
+                else
+                    ReloadLevel();
         } //end HandleInput
 
         /// <summary>

@@ -1,4 +1,10 @@
-﻿using System;
+﻿#region
+/*
+ * AnimationSystem.cs
+ * Created by Forrest
+ */
+#endregion
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -7,26 +13,26 @@ namespace Software_Development_I
     /// <summary>
     /// Controls animation for a player.
     /// </summary>
-    struct AnimationChanging
+    struct AnimationSystem
     {
         #region Variables
 
+        Animation animation;
         public Animation Animation
         {
             get { return animation; }
         }
-        Animation animation;
 
-        public Vector2 Origin
-        {
-            get { return new Vector2(Animation.FrameWidth / 2, Animation.FrameHeight); }
-        }
-
+        int frameIndex;
         public int FrameIndex
         {
             get { return frameIndex; }
         }
-        int frameIndex;
+        
+        public Vector2 Origin
+        {
+            get { return new Vector2(Animation.FrameWidth / 2, Animation.FrameHeight); }
+        }
 
         private float time;
 
@@ -70,6 +76,7 @@ namespace Software_Development_I
                 Rectangle source = new Rectangle(FrameIndex * Animation.Texture.Height, 0, Animation.Texture.Height, Animation.Texture.Height);
 
                 spriteBatch.Draw(Animation.Texture, position, source, Color.White, 0.0f, Origin, 1.0f, spriteEffects, 0.0f);
+                
             } //end if
         } //end Draw
     } //end AnimationPlayer

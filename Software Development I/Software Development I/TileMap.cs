@@ -1,4 +1,10 @@
-﻿using System;
+﻿#region
+/*
+ * TileMap.cs
+ * Created by Forrest
+ */
+#endregion
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -13,6 +19,10 @@ namespace Software_Development_I
         public List<MapRow> rows = new List<MapRow>();
         public int mapWidth;
         public int mapHeight;
+        public int firstX;
+        public int firstY;
+        public int offsetX;
+        public int offsetY;
 
         /// <summary>
         /// Creates a level using Tiles and Map Cells.
@@ -95,13 +105,13 @@ namespace Software_Development_I
         /// <summary>
         /// Draws the Tile Map.
         /// </summary>
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            int firstX = (int)(Camera.Location.X / Tile.WIDTH);
-            int firstY = (int)(Camera.Location.Y / Tile.HEIGHT);
+            firstX = (int)(Camera.Location.X / Tile.WIDTH);
+            firstY = (int)(Camera.Location.Y / Tile.HEIGHT);
 
-            int offsetX = (int)(Camera.Location.X % Tile.WIDTH);
-            int offsetY = (int)(Camera.Location.Y % Tile.HEIGHT);
+            offsetX = (int)(Camera.Location.X % Tile.WIDTH);
+            offsetY = (int)(Camera.Location.Y % Tile.HEIGHT);
 
             for (int y = 0; y < Camera.viewHeight / Tile.HEIGHT + 1; y++)
                 for (int x = 0; x < Camera.viewWidth / Tile.WIDTH + 1; x++)

@@ -1,4 +1,10 @@
-﻿using System;
+﻿#region File Description
+/*
+ * Level.cs
+ * Created by Forrest
+ */
+#endregion
+using System;
 using System.IO;
 using System.Collections.Generic;
 
@@ -14,28 +20,27 @@ namespace Software_Development_I
     {
         #region Variables
 
+        ContentManager content;
         public ContentManager Content
         {
             get { return content; }
         }
-        ContentManager content;
 
+        Player player;
         public Player Player
         {
             get { return player; }
         }
-        Player player;
 
+        bool endReached;
         public bool EndReached
         {
             get { return endReached; }
         }
-        bool endReached;
-
+        
         private TileMap levelMap;
-        private Vector2 start;
+        private Vector2 start = new Vector2(2*Tile.WIDTH, 16*Tile.HEIGHT);
         private Point end = new Point(-1, -1);
-        private SoundEffect exampleSound;
 
         #endregion
 
@@ -64,7 +69,7 @@ namespace Software_Development_I
 
             //Initialize Camera
             Camera.InitializeLevel(levelMap);
-            player = new Player(this, Camera.Location);
+            player = new Player(this, start);
         } //end Level
 
         /// <summary>
@@ -81,12 +86,17 @@ namespace Software_Development_I
 
         public TileCollision GetCollision(int x, int y)
         {
+            if (x < 0 || x >= Camera.worldWidth / Tile.WIDTH)
+                return TileCollision.Impassable;
+            if (y < 0 || y >= Camera.worldHeight / Tile.HEIGHT)
+                return TileCollision.Passable;
+
             return levelMap.rows[y].columns[x].collision;
         } //end GetCollision
 
         public Rectangle GetBounds(int x, int y)
         {
-            return new Rectangle(x * Tile.WIDTH, y * Tile.HEIGHT, Tile.WIDTH, Tile.HEIGHT);
+            return new Rectangle((x) * Tile.WIDTH, (y) * Tile.HEIGHT, Tile.WIDTH, Tile.HEIGHT);
         } //end GetBounds
 
         #endregion
@@ -107,14 +117,13 @@ namespace Software_Development_I
                 {
                     Player.Update(gameTime, keyboardState, gamePadState);
 
-                    
 
-                    //if Player.BoundingRectangle.Top is lower than cam bot
-                        //player.OnKilled(null);
+                    if (Player.BoundingBox.Top >= Camera.worldHeight)
+                        Player.OnDeath();
 
                     UpdateEnemies(gameTime);
 
-                    if (Player.Alive && Player.Grounded && Player.BoundingRectangle.Contains(end))
+                    if (Player.Alive && Player.Grounded && Player.BoundingBox.Contains(end))
                         OnEndReached();
 
                     
@@ -133,6 +142,18 @@ namespace Software_Development_I
                 //if (enemy.BoundingRectangle.Intersects(player.BoundingRectangle))
                     //player.OnKilled(enemy);
         } //end UpdateEnemeies
+
+        #endregion
+
+        #region Level Events
+
+        /// <summary>
+        /// Starts the player back at the beginning with no penalty.
+        /// </summary>
+        public void NewLife()
+        {
+            Player.Reset(start);
+        }
 
         /// <summary>
         /// Called when player reaches the end of a level
@@ -153,7 +174,8 @@ namespace Software_Development_I
         /// </summary>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            levelMap.Draw(gameTime, spriteBatch);
+            levelMap.Draw(spriteBatch);
+            Player.Draw(gameTime, spriteBatch);
         } //end Draw
 
         #endregion
