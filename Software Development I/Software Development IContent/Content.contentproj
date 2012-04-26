@@ -93,8 +93,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sounds\PlayerKilled.wma">
-      <Name>PlayerKilled</Name>
+    <Compile Include="Sounds\death.wma">
+      <Name>death</Name>
       <Importer>WmaImporter</Importer>
       <Processor>SongProcessor</Processor>
     </Compile>
