@@ -37,9 +37,11 @@ namespace Software_Development_I
         {
             get { return endReached; }
         }
-        
+
         private TileMap levelMap;
-        private Vector2 start = new Vector2(2*Tile.WIDTH, 16*Tile.HEIGHT);
+        private Vector2 start = new Vector2(-1, -1);
+        private Vector2 checkVec = new Vector2(-1, -1);
+        private Point checkPoint = new Point(-1, -1);
         private Point end = new Point(-1, -1);
 
         #endregion
@@ -55,15 +57,15 @@ namespace Software_Development_I
         /// <param name="filePath">
         /// String of path to file containing tile placement data
         /// </param>
-        public Level(IServiceProvider service, String filePath, int levelIndex)
+        public Level(IServiceProvider service, int levelIndex)
         {
             //Create content manager for current level.
             content = new ContentManager(service, "Content");
 
             //Load level map
-            levelMap = new TileMap(filePath, content.Load<Texture2D>("Tiles/tiles"));
+            levelMap = new TileMap(this, levelIndex, content.Load<Texture2D>("Tiles/tiles"));
 
-            
+
             //Load sounds
             //exampleSound = content.Load<SoundEffect>("Sounds/example");
 
@@ -71,6 +73,22 @@ namespace Software_Development_I
             Camera.InitializeLevel(levelMap);
             player = new Player(this, start);
         } //end Level
+
+        public void SetStart(int x, int y)
+        {
+            start = RectangleExtensions.GetBottomCenter(GetBounds(x, y));
+        } // end SetPlayer
+
+        public void SetCheck(int x, int y)
+        {
+            checkVec = RectangleExtensions.GetBottomCenter(GetBounds(x, y));
+            checkPoint = GetBounds(x, y).Center;
+        } //end SetCheck
+
+        public void SetEnd(int x, int y)
+        {
+            end = GetBounds(x, y).Center;
+        } //end SetExit
 
         /// <summary>
         /// Garbage collection for current level content
@@ -123,10 +141,14 @@ namespace Software_Development_I
 
                     UpdateEnemies(gameTime);
 
+                    if (Player.Alive && Player.BoundingBox.Contains(checkPoint))
+                        start = checkVec;
+
                     if (Player.Alive && Player.Grounded && Player.BoundingBox.Contains(end))
                         OnEndReached();
 
-                    
+
+
                 } //end else
 
         } //end Update
@@ -137,10 +159,10 @@ namespace Software_Development_I
         private void UpdateEnemies(GameTime gameTime)
         {
             //foreach (Enemy enemy in enemies)
-                //enemy.Update(gameTime)
+            //enemy.Update(gameTime)
 
-                //if (enemy.BoundingRectangle.Intersects(player.BoundingRectangle))
-                    //player.OnKilled(enemy);
+            //if (enemy.BoundingRectangle.Intersects(player.BoundingRectangle))
+            //player.OnKilled(enemy);
         } //end UpdateEnemeies
 
         #endregion
@@ -160,9 +182,9 @@ namespace Software_Development_I
         /// </summary>
         private void OnEndReached()
         {
-            //player.OnExitReached();
-            //exitReachedSound.Play();
             endReached = true;
+            //player.OnWin();
+            //exitReachedSound.Play();
         } //end OnExitReached
 
         #endregion

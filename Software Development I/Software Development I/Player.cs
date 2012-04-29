@@ -40,7 +40,7 @@ namespace Software_Development_I
         {
             get { return level; }
         }
-        
+
         int lives;
         public int Lives
         {
@@ -72,7 +72,7 @@ namespace Software_Development_I
             get { return velocity; }
             set { velocity = value; }
         }
-        
+
         public Rectangle BoundingBox
         {
             get
@@ -82,7 +82,7 @@ namespace Software_Development_I
 
                 return new Rectangle(left, top, localBounds.Width, localBounds.Height);
             }
-        } 
+        }
 
         //Animation
         private Animation idle;
@@ -135,7 +135,7 @@ namespace Software_Development_I
             localBounds = new Rectangle(left, top, width, height);
 
 
-            //deathSound = Level.Content.Load<SoundEffect>("Sounds/PlayerKilled");
+            deathSound = Level.Content.Load<SoundEffect>("Sounds/death");
 
             Reset(position);
 
@@ -168,8 +168,8 @@ namespace Software_Development_I
             ApplyPhysics(gameTime);
 
             Camera.Location = new Vector2(
-                MathHelper.Clamp(Camera.Location.X, Position.X - Camera.viewWidth * 3/4 , Position.X - Camera.viewWidth /  4),
-                MathHelper.Clamp(Camera.Location.Y, Position.Y - Camera.viewHeight * 3/8, Position.Y - Camera.viewHeight / 8));
+                MathHelper.Clamp(Camera.Location.X, Position.X - Camera.viewWidth * 3 / 4, Position.X - Camera.viewWidth / 4),
+                MathHelper.Clamp(Camera.Location.Y, Position.Y - Camera.viewHeight * 3 / 8, Position.Y - Camera.viewHeight * 5 / 8));
 
             if (Alive && Grounded)
                 if (Math.Abs(Velocity.X) - 0.02f > 0)
@@ -298,7 +298,7 @@ namespace Software_Development_I
                     {
                         Rectangle tileBounds = Level.GetBounds(x, y);
                         Vector2 intersectDepth = RectangleExtensions.GetIntersectionDepth(playerBounds, tileBounds);
-                        
+
                         //if intersecting
                         if (intersectDepth != Vector2.Zero)
                         {
@@ -340,7 +340,7 @@ namespace Software_Development_I
             alive = false;
             lives--;
 
-            //deathSound.Play();
+            deathSound.Play();
 
             sprite.PlayAnimation(death);
         } //end OnDeath
