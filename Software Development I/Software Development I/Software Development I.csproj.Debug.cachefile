@@ -5,12 +5,11 @@ Content\Sprites\Player\Die.xnb
 Content\Sprites\Player\Idle.xnb
 Content\Sprites\Player\Jump.xnb
 Content\Sprites\Player\Run.xnb
-Content\Sounds\death.xnb
 Content\Fonts\Hud.xnb
 Content\gamefont.xnb
 Content\menufont.xnb
 Content\blank.xnb
 Content\background.xnb
 Content\gradient.xnb
-Content\Sounds\death.wma
+Content\Sounds\death.xnb
 Content\Levels\0.map

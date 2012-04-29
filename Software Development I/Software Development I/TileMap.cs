@@ -19,10 +19,8 @@ namespace Software_Development_I
         public List<MapRow> rows = new List<MapRow>();
         public int mapWidth;
         public int mapHeight;
-        public int firstX;
-        public int firstY;
-        public int offsetX;
-        public int offsetY;
+
+
 
         /// <summary>
         /// Creates a level using Tiles and Map Cells.
@@ -42,9 +40,11 @@ namespace Software_Development_I
         /// <param name="spacing">
         /// //Spacing between each tile in texture.
         /// </param>
-        public TileMap(string levelPath, Texture2D tileSheet)
+        public TileMap(Level level, int levelIndex, Texture2D tileSheet)
         {
             this.tileSheet = tileSheet;
+
+            string levelPath = string.Format("Content/Levels/{0}.map", levelIndex);
 
             using (StreamReader sr = new StreamReader(levelPath))
             {
@@ -92,7 +92,36 @@ namespace Software_Development_I
                                         rows[curY - 1].columns[i].collision = TileCollision.Impassable;
                                     } //end if
                                 } //end try
-                                catch (Exception) { }
+                                catch (Exception)
+                                {
+                                    try
+                                    {
+                                        char check = tiles[i][0];
+
+                                        switch (check)
+                                        {
+                                            case 'S':
+                                                rows[curY - 1].columns[i].tileID = 0;
+                                                rows[curY - 1].columns[i].collision = TileCollision.Passable;
+                                                level.SetStart(curX, curY - 1);
+                                                break;
+                                            case 'C':
+                                                rows[curY - 1].columns[i].tileID = 3;
+                                                rows[curY - 1].columns[i].collision = TileCollision.Passable;
+                                                level.SetCheck(curX, curY - 1);
+                                                break;
+                                            case 'X':
+                                                rows[curY - 1].columns[i].tileID = 3;
+                                                rows[curY - 1].columns[i].collision = TileCollision.Passable;
+                                                level.SetEnd(curX, curY - 1);
+                                                break;
+                                            default:
+                                                break;
+                                        } //end switch
+                                    } //end try
+                                    catch (Exception) { }
+
+                                } //end catch
                                 curX++;
                             } //end for
                         } //end if
@@ -107,15 +136,15 @@ namespace Software_Development_I
         /// </summary>
         public void Draw(SpriteBatch spriteBatch)
         {
-            firstX = (int)(Camera.Location.X / Tile.WIDTH);
-            firstY = (int)(Camera.Location.Y / Tile.HEIGHT);
+            int firstX = (int)(Camera.Location.X / Tile.WIDTH);
+            int firstY = (int)(Camera.Location.Y / Tile.HEIGHT);
 
-            offsetX = (int)(Camera.Location.X % Tile.WIDTH);
-            offsetY = (int)(Camera.Location.Y % Tile.HEIGHT);
+            int offsetX = (int)(Camera.Location.X % Tile.WIDTH);
+            int offsetY = (int)(Camera.Location.Y % Tile.HEIGHT);
 
             for (int y = 0; y < Camera.viewHeight / Tile.HEIGHT + 1; y++)
                 for (int x = 0; x < Camera.viewWidth / Tile.WIDTH + 1; x++)
-                    
+
                     if (rows[firstY + y].columns[firstX + x].tileID > 0)
                         spriteBatch.Draw(
                             tileSheet,
@@ -126,7 +155,7 @@ namespace Software_Development_I
                                 Tile.HEIGHT),
                             rows[firstY + y].columns[firstX + x].GetSourceRectangle(tileSheet),
                             Color.White);
-                    
+
         } //end Draw
     } //end class TileMap
 
