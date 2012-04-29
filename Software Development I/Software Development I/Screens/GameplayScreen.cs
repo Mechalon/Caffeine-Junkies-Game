@@ -32,7 +32,7 @@ namespace Software_Development_I
         private Texture2D loseOverlay;
 
         //Meta-level game state
-        private const int numberOfLevels = 1;
+        private const int numberOfLevels = 2;
         private int levelIndex = -1;
         private Level level;
         private bool continuePressed;
@@ -95,10 +95,7 @@ namespace Software_Development_I
             if (level != null)
                 level.Dispose();
 
-            //Load the level
-            string levelPath = string.Format("Content/Levels/{0}.map", levelIndex);
-
-            level = new Level(ScreenManager.Game.Services, levelPath, levelIndex);
+            level = new Level(ScreenManager.Game.Services, levelIndex);
 
         } //end LoadNextLevel()
 
@@ -145,6 +142,9 @@ namespace Software_Development_I
             //if (keyboardState.IsKeyDown(Keys.Escape) ||
               //  gamePadState.Buttons.Back == ButtonState.Pressed)
                 //this.Exit();
+
+            if (level.Player.Alive && level.EndReached)
+                LoadNextLevel();
 
             if (!level.Player.Alive)
                 if (level.Player.Lives > 0)
