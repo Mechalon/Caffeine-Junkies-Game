@@ -20,6 +20,8 @@ namespace Software_Development_I
     {
         #region Initialization
 
+        static int loadLevelNumber = 0;
+
 
         /// <summary>
         /// Constructor fills in the menu contents.
@@ -29,7 +31,7 @@ namespace Software_Development_I
         {
             // Create our menu entries.
             MenuEntry playGameMenuEntry = new MenuEntry("Play Game");
-            MenuEntry optionsMenuEntry = new MenuEntry("Options");
+            MenuEntry optionsMenuEntry = new MenuEntry("Level Select");
             MenuEntry exitMenuEntry = new MenuEntry("Exit");
 
             // Hook up menu event handlers.

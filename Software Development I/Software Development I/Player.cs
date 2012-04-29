@@ -195,9 +195,9 @@ namespace Software_Development_I
                 movement = 0.0f;
 
             //Keyboard movements (overwrites analog stick)
-            if (keyboardState.IsKeyDown(Keys.A))
+            if (keyboardState.IsKeyDown(Keys.A) || gamePadState.IsButtonDown(Buttons.DPadLeft))
                 movement = -1.0f;
-            else if (keyboardState.IsKeyDown(Keys.D))
+            else if (keyboardState.IsKeyDown(Keys.D) || gamePadState.IsButtonDown(Buttons.DPadRight))
                 movement = 1.0f;
 
             //checks for jumps

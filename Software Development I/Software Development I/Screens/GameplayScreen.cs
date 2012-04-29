@@ -25,6 +25,9 @@ namespace Software_Development_I
         ContentManager Content;
         SpriteFont gameFont;
 
+        float pauseAlpha;
+        private Texture2D lifeIcon;
+
         //Global content
         private SpriteFont hudFont;
 
@@ -33,7 +36,7 @@ namespace Software_Development_I
 
         //Meta-level game state
         private const int numberOfLevels = 2;
-        private int levelIndex = -1;
+        private int levelIndex = OptionsMenuScreen.GameOptions.levelSelected - 2;
         private Level level;
         private bool continuePressed;
 
@@ -65,6 +68,8 @@ namespace Software_Development_I
 
             //Load fonts
             hudFont = Content.Load<SpriteFont>("Fonts/hud");
+
+            lifeIcon = Content.Load<Texture2D>("Sprites/Player/lifeIco");
 
             //Load overlays
             //winOverlay = Content.Load<Texture2D>("Overlays/win");
@@ -126,9 +131,17 @@ namespace Software_Development_I
             //HandleInput();
 
             //Update level, passing GameTime and input states.
-            level.Update(gameTime, keyboardState, gamePadState);
-
             base.Update(gameTime, otherScreenHasFocus, false);
+
+
+            if (coveredByOtherScreen)
+                pauseAlpha = Math.Min(pauseAlpha + 1f / 32, 1);
+            else
+                pauseAlpha = Math.Max(pauseAlpha - 1f / 32, 0);
+
+            if (IsActive)
+                //Update level, passing GameTime and input states.
+                level.Update(gameTime, keyboardState, gamePadState);
         } //end Update
 
         /// <summary>
@@ -136,8 +149,10 @@ namespace Software_Development_I
         /// </summary>
         public override void HandleInput(InputState input)
         {
-            keyboardState = Keyboard.GetState();
-            gamePadState = GamePad.GetState(PlayerIndex.One);
+            int playerIndex = (int)ControllingPlayer.Value;
+
+            keyboardState = input.CurrentKeyboardStates[playerIndex];
+            gamePadState = input.CurrentGamePadStates[playerIndex];
 
             //if (keyboardState.IsKeyDown(Keys.Escape) ||
               //  gamePadState.Buttons.Back == ButtonState.Pressed)
@@ -150,7 +165,17 @@ namespace Software_Development_I
                 if (level.Player.Lives > 0)
                     level.NewLife();
                 else
+                {
+                    ScreenManager.AddScreen(new GameOverScreen(), ControllingPlayer);
                     ReloadLevel();
+                }
+
+            bool gamePadDisconnected = !gamePadState.IsConnected && input.GamePadWasConnected[playerIndex];
+
+            if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected)
+            {
+                ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
+            }
         } //end HandleInput
 
         /// <summary>
@@ -169,16 +194,32 @@ namespace Software_Development_I
 
             level.Draw(gameTime, spriteBatch);
 
-            DrawHud();
+            DrawHud(spriteBatch);
 
             spriteBatch.End();
 
-            base.Draw(gameTime);
+            if (TransitionPosition > 0 || pauseAlpha > 0)
+            {
+                float alpha = MathHelper.Lerp(1f - TransitionAlpha, 1f, pauseAlpha / 2);
+
+                ScreenManager.FadeBackBufferToBlack(alpha);
+            }
         } //end Draw
 
-        private void DrawHud()
+        private void DrawHud(SpriteBatch spriteBatch)
         {
+            Rectangle titleSafeArea = ScreenManager.GraphicsDevice.Viewport.TitleSafeArea;
+            int width = lifeIcon.Width;
+            int left = 0;
+            int height = lifeIcon.Height;
+            int top = 465;
+            Rectangle iconLocation = new Rectangle(left, top, width, height);
+            Vector2 lifeLocation = new Vector2(titleSafeArea.Left + width + 5, 460);
+            string livesRemaining = "x " + level.Player.Lives.ToString();
 
+            spriteBatch.Draw(lifeIcon, iconLocation, Color.White);
+
+            spriteBatch.DrawString(hudFont, livesRemaining, lifeLocation, Color.White);
         } //end DrawHud
 
     } //end NinjaGame
