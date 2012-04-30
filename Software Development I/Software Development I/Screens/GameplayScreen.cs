@@ -210,11 +210,17 @@ namespace Software_Development_I
         {
             Rectangle titleSafeArea = ScreenManager.GraphicsDevice.Viewport.TitleSafeArea;
             int width = lifeIcon.Width;
-            int left = 0;
             int height = lifeIcon.Height;
-            int top = 465;
+            int left = titleSafeArea.Left;
+#if WINDOWS
+            int top = titleSafeArea.Bottom - 30;
+            Vector2 lifeLocation = new Vector2(titleSafeArea.Left + width + 5, titleSafeArea.Bottom - 30);
+#endif
+#if XBOX
+            int top = titleSafeArea.Bottom;
+            Vector2 lifeLocation = new Vector2(titleSafeArea.Left + width + 5, titleSafeArea.Bottom);
+#endif
             Rectangle iconLocation = new Rectangle(left, top, width, height);
-            Vector2 lifeLocation = new Vector2(titleSafeArea.Left + width + 5, 460);
             string livesRemaining = "x " + level.Player.Lives.ToString();
 
             spriteBatch.Draw(lifeIcon, iconLocation, Color.White);

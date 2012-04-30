@@ -54,9 +54,15 @@ namespace Software_Development_I
         /// </summary>
         public MessageBoxScreen(string message, bool includeUsageText)
         {
+#if WINDOWS
             const string usageText = "\nA button, Space, Enter = ok" +
                                      "\nB button, Esc = cancel"; 
-            
+#endif
+#if XBOX
+            const string usageText = "\nA button = ok" +
+                                     "\nB button = cancel";
+#endif
+
             if (includeUsageText)
                 this.message = message + usageText;
             else
@@ -79,7 +85,7 @@ namespace Software_Development_I
         {
             ContentManager content = ScreenManager.Game.Content;
 
-            gradientTexture = content.Load<Texture2D>("gradient");
+            gradientTexture = content.Load<Texture2D>("Backgrounds/gradient");
         }
 
 

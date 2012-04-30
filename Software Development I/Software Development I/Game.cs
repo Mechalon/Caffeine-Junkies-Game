@@ -32,7 +32,7 @@ namespace Software_Development_I
         // when they suddenly need to be loaded in the middle of a menu transition.
         static readonly string[] preloadAssets =
         {
-            "gradient",
+            "Backgrounds/gradient",
         };
 
 
@@ -50,6 +50,31 @@ namespace Software_Development_I
 
             graphics = new GraphicsDeviceManager(this);
 
+            DisplayMode displayMode = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode;
+
+            if (displayMode.Height == 768)
+            {
+                graphics.PreferredBackBufferWidth = 1024;
+                graphics.PreferredBackBufferHeight = 768;
+            }
+            else
+            {
+                if (displayMode.Width < 800 || displayMode.Height < 600)
+                {
+                    graphics.PreferredBackBufferWidth = 640;
+                    graphics.PreferredBackBufferHeight = 480;
+                }
+                else if (displayMode.Width < 1280 || displayMode.Height < 720)
+                {
+                    graphics.PreferredBackBufferWidth = 800;
+                    graphics.PreferredBackBufferHeight = 600;
+                }
+                else
+                {
+                    graphics.PreferredBackBufferWidth = 1280;
+                    graphics.PreferredBackBufferHeight = 720;
+                }
+            }
 
             // Create the screen manager component.
             screenManager = new ScreenManager(this);
@@ -65,7 +90,6 @@ namespace Software_Development_I
             //Accelerometer.Initialize();
         }
 
-
         /// <summary>
         /// Loads graphics content.
         /// </summary>
@@ -76,7 +100,6 @@ namespace Software_Development_I
                 Content.Load<object>(asset);
             }
         }
-
 
         #endregion
 
@@ -94,10 +117,8 @@ namespace Software_Development_I
             base.Draw(gameTime);
         }
 
-
         #endregion
     }
-
 
     #region Entry Point
 

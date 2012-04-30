@@ -52,7 +52,7 @@ namespace Software_Development_I
         /// </summary>
         void QuitGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            const string message = "Are you sure you want to quit this game?";
+            const string message = "Are you sure you want to quit?";
 
             MessageBoxScreen confirmQuitMessageBox = new MessageBoxScreen(message);
 
