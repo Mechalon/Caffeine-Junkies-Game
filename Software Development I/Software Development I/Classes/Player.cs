@@ -116,7 +116,8 @@ namespace Software_Development_I
 
         //Health and Lives
         private GameTime curTime;
-        float lastDamage = 0;
+        TimeSpan interval = new TimeSpan(0, 0, 2);
+        TimeSpan lastDamaged = new TimeSpan(0, 0, 0);
 
         #endregion
 
@@ -290,7 +291,7 @@ namespace Software_Development_I
             Position += velocity * totalTime;
             Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
 
-            HandleCollisions();
+            HandleCollisions(gameTime);
 
             //Cancel velocity based on collisions
             if (Position.X == previousPosition.X)
@@ -339,14 +340,14 @@ namespace Software_Development_I
         /// <summary>
         /// Handles collision between the player ad
         /// </summary>
-        private void HandleCollisions()
+        private void HandleCollisions(GameTime gameTime)
         {
             Rectangle playerBounds = BoundingBox;
             int leftTile = (int)Math.Floor((float)playerBounds.Left / Tile.WIDTH);
             int rightTile = (int)Math.Ceiling(((float)playerBounds.Right / Tile.WIDTH)) - 1;
             int topTile = (int)Math.Floor((float)playerBounds.Top / Tile.HEIGHT);
             int bottomTile = (int)Math.Ceiling(((float)playerBounds.Bottom / Tile.HEIGHT)) - 1;
-            float totalTime = (float)curTime.ElapsedGameTime.TotalSeconds;
+            float totalTime = (float)gameTime.ElapsedGameTime.Seconds;
 
             grounded = false;
 
@@ -383,8 +384,11 @@ namespace Software_Development_I
 
                                     playerBounds = BoundingBox;
 
-                                    takeDamage(1);
-                                    lastDamage = totalTime;
+                                    if (gameTime.TotalGameTime > lastDamaged + interval)
+                                    {
+                                        takeDamage(1);
+                                        lastDamaged = gameTime.TotalGameTime;
+                                    }
                                 } //end if
                             } //end if
 
@@ -394,7 +398,6 @@ namespace Software_Development_I
                                 {
                                     Position = new Vector2(Position.X + intersectDepth.X, Position.Y);
                                     playerBounds = BoundingBox;
-                                    //if (velocity.Y == MAXFALLSPEED) takeDamage(1); damage if the player falls too fast?
                                 } //end if
 
                                 if (collision == TileCollision.Hurt)
@@ -402,8 +405,11 @@ namespace Software_Development_I
                                     Position = new Vector2(Position.X + intersectDepth.X, Position.Y);
                                     playerBounds = BoundingBox;
 
-                                    takeDamage(1);
-                                    lastDamage = totalTime;
+                                    if (gameTime.TotalGameTime > lastDamaged + interval)
+                                    {
+                                        takeDamage(1);
+                                        lastDamaged = gameTime.TotalGameTime;
+                                    }
 
                                 } //end if
 
