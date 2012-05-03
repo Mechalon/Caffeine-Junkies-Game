@@ -63,7 +63,7 @@ namespace Software_Development_I
                      "\nEsc = cancel"; 
 #endif
 #if XBOX
-            const string usageText = "\nA button = ok" +
+            usageText = "\nA button = ok" +
                                      "\nB button = cancel";
 #endif
 

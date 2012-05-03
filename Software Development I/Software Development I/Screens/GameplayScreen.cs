@@ -232,25 +232,21 @@ namespace Software_Development_I
         private void DrawHud(SpriteBatch spriteBatch)
         {
             Rectangle titleSafeArea = ScreenManager.GraphicsDevice.Viewport.TitleSafeArea;
-            int width = lifeIcon.Width;
-            int height = lifeIcon.Height;
-            int left = titleSafeArea.Left;
             int hearts = level.Player.Health;
-#if WINDOWS
-            int top = titleSafeArea.Bottom - 30;
-            Vector2 lifeLocation = new Vector2(titleSafeArea.Left + width + 5, titleSafeArea.Bottom - 30);
+#if WINDOWS || WINDOWS_PHONE
+            int left = titleSafeArea.Left + 20;
+            int top = titleSafeArea.Top + 20;
 #endif
 #if XBOX
-            int top = titleSafeArea.Bottom;
-            Vector2 lifeLocation = new Vector2(titleSafeArea.Left + width + 5, titleSafeArea.Bottom);
+            int left = titleSafeArea.Left;
+            int top = titleSafeArea.Top;
 #endif
-            Rectangle iconLocation = new Rectangle(left, top, width, height);
             string livesRemaining = "x " + level.Player.Lives.ToString();
 
-            spriteBatch.Draw(lifeIcon, new Vector2(20, 20), Color.White);
-            spriteBatch.DrawString(hudFont, livesRemaining, new Vector2(20 + lifeIcon.Width, 20), Color.White);
             for (int x = 0; x < hearts; x++)
-                spriteBatch.Draw(heart, new Vector2(20 + x * heart.Width, 50), Color.White);
+                spriteBatch.Draw(heart, new Vector2(left + x * heart.Width, top), Color.White);
+            spriteBatch.Draw(lifeIcon, new Vector2(left, top + heart.Height + 5), Color.White);
+            spriteBatch.DrawString(hudFont, livesRemaining, new Vector2(left + lifeIcon.Width + 5, top + heart.Height + 5), Color.White);
         } //end DrawHud
     } //end NinjaGame
 
