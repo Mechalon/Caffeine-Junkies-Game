@@ -32,7 +32,6 @@ namespace Software_Development_I
 
         #region Initialization
 
-
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -41,7 +40,6 @@ namespace Software_Development_I
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
-
 
         /// <summary>
         /// Loads graphics content for this screen. The background texture is quite
@@ -58,7 +56,6 @@ namespace Software_Development_I
             backgroundTexture = content.Load<Texture2D>("Backgrounds/background");
         }
 
-
         /// <summary>
         /// Unloads graphics content for this screen.
         /// </summary>
@@ -67,11 +64,9 @@ namespace Software_Development_I
             content.Unload();
         }
 
-
         #endregion
 
         #region Update and Draw
-
 
         /// <summary>
         /// Updates the background screen. Unlike most screens, this should not
@@ -85,7 +80,6 @@ namespace Software_Development_I
         {
             base.Update(gameTime, otherScreenHasFocus, false);
         }
-
 
         /// <summary>
         /// Draws the background screen.
@@ -103,7 +97,6 @@ namespace Software_Development_I
 
             spriteBatch.End();
         }
-
 
         #endregion
     }

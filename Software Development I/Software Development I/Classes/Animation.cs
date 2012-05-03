@@ -4,6 +4,7 @@
  * Created by Forrest
  */
 #endregion
+
 using System;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -35,19 +36,16 @@ namespace Software_Development_I
         {
             get{ return Texture.Width / FrameWidth;}
         }
-        int frameCount;
 
         public int FrameWidth
         {
             get { return Texture.Height; }
         }
-        int frameWidth;
 
         public int FrameHeight
         {
             get { return Texture.Height; }
         }
-        int frameHeight;
 
         #endregion
 
@@ -69,6 +67,5 @@ namespace Software_Development_I
             this.frameTime = frameTime;
             this.loops = loops;
         } //end Animation
-
     } //end Animation
 } //end

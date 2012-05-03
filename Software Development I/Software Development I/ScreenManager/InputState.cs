@@ -44,7 +44,6 @@ namespace Software_Development_I
 
         #region Initialization
 
-
         /// <summary>
         /// Constructs a new input state.
         /// </summary>
@@ -59,11 +58,9 @@ namespace Software_Development_I
             GamePadWasConnected = new bool[MaxInputs];
         }
 
-
         #endregion
 
         #region Public Methods
-
 
         /// <summary>
         /// Reads the latest state of the keyboard and gamepad.
@@ -95,7 +92,6 @@ namespace Software_Development_I
             }
         }
 
-
         /// <summary>
         /// Helper for checking if a key was newly pressed during this update. The
         /// controllingPlayer parameter specifies which player to read input for.
@@ -124,7 +120,6 @@ namespace Software_Development_I
                         IsNewKeyPress(key, PlayerIndex.Four, out playerIndex));
             }
         }
-
 
         /// <summary>
         /// Helper for checking if a button was newly pressed during this update.
@@ -155,7 +150,6 @@ namespace Software_Development_I
             }
         }
 
-
         /// <summary>
         /// Checks for a "menu select" input action.
         /// The controllingPlayer parameter specifies which player to read input for.
@@ -171,7 +165,6 @@ namespace Software_Development_I
                    IsNewButtonPress(Buttons.Start, controllingPlayer, out playerIndex);
         }
 
-
         /// <summary>
         /// Checks for a "menu cancel" input action.
         /// The controllingPlayer parameter specifies which player to read input for.
@@ -185,7 +178,6 @@ namespace Software_Development_I
                    IsNewButtonPress(Buttons.B, controllingPlayer, out playerIndex) ||
                    IsNewButtonPress(Buttons.Back, controllingPlayer, out playerIndex);
         }
-
 
         /// <summary>
         /// Checks for a "menu up" input action.
@@ -201,7 +193,6 @@ namespace Software_Development_I
                    IsNewButtonPress(Buttons.LeftThumbstickUp, controllingPlayer, out playerIndex);
         }
 
-
         /// <summary>
         /// Checks for a "menu down" input action.
         /// The controllingPlayer parameter specifies which player to read
@@ -216,7 +207,6 @@ namespace Software_Development_I
                    IsNewButtonPress(Buttons.LeftThumbstickDown, controllingPlayer, out playerIndex);
         }
 
-
         /// <summary>
         /// Checks for a "pause the game" input action.
         /// The controllingPlayer parameter specifies which player to read
@@ -230,7 +220,6 @@ namespace Software_Development_I
                    IsNewButtonPress(Buttons.Back, controllingPlayer, out playerIndex) ||
                    IsNewButtonPress(Buttons.Start, controllingPlayer, out playerIndex);
         }
-
 
         #endregion
     }

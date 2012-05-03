@@ -4,10 +4,10 @@
  * Created by Forrest
  */
 #endregion
+
 using System;
 using System.Collections.Generic;
 using System.IO;
-
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -19,8 +19,6 @@ namespace Software_Development_I
         public List<MapRow> rows = new List<MapRow>();
         public int mapWidth;
         public int mapHeight;
-
-
 
         /// <summary>
         /// Creates a level using Tiles and Map Cells.
@@ -73,7 +71,6 @@ namespace Software_Development_I
                     } //end if
                     else
                     {
-
                         //second line contains base layer info
                         if (curY >= 1 && curY <= mapHeight)
                         {
@@ -130,7 +127,6 @@ namespace Software_Development_I
                                         } //end switch
                                     } //end try
                                     catch (Exception) { }
-
                                 } //end catch
                                 curX++;
                             } //end for
@@ -153,7 +149,9 @@ namespace Software_Development_I
             int offsetY = (int)(Camera.Location.Y % Tile.HEIGHT);
 
             for (int y = 0; y < Camera.viewHeight / Tile.HEIGHT + 1; y++)
+            {
                 for (int x = 0; x < Camera.viewWidth / Tile.WIDTH + 1; x++)
+                {
 
                     if (rows[firstY + y].columns[firstX + x].tileID > 0)
                         spriteBatch.Draw(
@@ -165,7 +163,8 @@ namespace Software_Development_I
                                 Tile.HEIGHT),
                             rows[firstY + y].columns[firstX + x].GetSourceRectangle(tileSheet),
                             Color.White);
-
+                }
+            }
         } //end Draw
     } //end class TileMap
 

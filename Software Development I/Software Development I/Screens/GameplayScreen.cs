@@ -8,7 +8,6 @@
 
 using System;
 using System.IO;
-
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -23,7 +22,6 @@ namespace Software_Development_I
     {
         //Resources for drawing
         ContentManager Content;
-        SpriteFont gameFont;
 
         float pauseAlpha;
         private Texture2D lifeIcon;
@@ -32,40 +30,26 @@ namespace Software_Development_I
         //Global content
         private SpriteFont hudFont;
 
-        private Texture2D winOverlay;
-        private Texture2D loseOverlay;
-
         //Meta-level game state
         private const int numberOfLevels = 2;
         private int levelIndex = OptionsMenuScreen.GameOptions.levelSelected - 2;
         private Level level;
-        private bool continuePressed;
+        private bool firstRun = true;
 
         //store input states once per frame
         private GamePadState gamePadState;
         private KeyboardState keyboardState;
 
-
         public GameplayScreen()
         {
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
-            //Content.RootDirectory = "Content";
         } //end NinjaGame
-
-        //protected override void Initialize()
-        //{
-            //Camera.InitializeScreen(graphics);
-
-            //base.Initialize();
-        //} //end Initialize
 
         public override void LoadContent()
         {
             if (Content == null)
                 Content = new ContentManager(ScreenManager.Game.Services, "Content");
-            //Create Sprite Batch for drawing textures
-            //spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //Load fonts
             hudFont = Content.Load<SpriteFont>("Fonts/hud");
@@ -73,10 +57,6 @@ namespace Software_Development_I
             // Load Icons
             lifeIcon = Content.Load<Texture2D>("Sprites/Player/lifeIco");
             heart = Content.Load<Texture2D>("Sprites/Player/heart");
-
-            //Load overlays
-            //winOverlay = Content.Load<Texture2D>("Overlays/win");
-            //loseOverlay = Content.Load<Texture2D>("Overlays/lose");
 
             try
             {
@@ -86,8 +66,6 @@ namespace Software_Development_I
             catch { }
 
             LoadNextLevel();
-
-            //Camera.InitializeScreen(graphics);
 
             base.LoadContent();
         } //end LoadContent
@@ -105,12 +83,15 @@ namespace Software_Development_I
                 level.Dispose();
 
             if (levelIndex > 0) //if this isn't the starting level, set lives to equal the old ones
+            {
+                if (!firstRun)
                 oldLives = level.Player.Lives;
+            }
 
             level = new Level(ScreenManager.Game.Services, levelIndex);
 
             level.Player.addLives(oldLives); //set the lives
-
+            firstRun = false;
         } //end LoadNextLevel()
 
         /// <summary>
@@ -136,12 +117,8 @@ namespace Software_Development_I
         public override void Update(GameTime gameTime, bool otherScreenHasFocus,
                                                        bool coveredByOtherScreen)
         {
-            //Get input states and handle input
-            //HandleInput();
-
             //Update level, passing GameTime and input states.
             base.Update(gameTime, otherScreenHasFocus, false);
-
 
             if (coveredByOtherScreen)
                 pauseAlpha = Math.Min(pauseAlpha + 1f / 32, 1);
@@ -162,10 +139,6 @@ namespace Software_Development_I
 
             keyboardState = input.CurrentKeyboardStates[playerIndex];
             gamePadState = input.CurrentGamePadStates[playerIndex];
-
-            //if (keyboardState.IsKeyDown(Keys.Escape) ||
-              //  gamePadState.Buttons.Back == ButtonState.Pressed)
-                //this.Exit();
 
             if (level.Player.Alive && level.EndReached)
                 LoadNextLevel();
@@ -210,7 +183,6 @@ namespace Software_Development_I
             if (TransitionPosition > 0 || pauseAlpha > 0)
             {
                 float alpha = MathHelper.Lerp(1f - TransitionAlpha, 1f, pauseAlpha / 2);
-
                 ScreenManager.FadeBackBufferToBlack(alpha);
             }
         } //end Draw
@@ -238,6 +210,5 @@ namespace Software_Development_I
             for (int x = 0; x < hearts; x++)
                 spriteBatch.Draw(heart, new Vector2(20 + x * heart.Width, 50), Color.White);
         } //end DrawHud
-
     } //end NinjaGame
 } //end namespace

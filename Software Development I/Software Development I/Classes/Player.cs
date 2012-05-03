@@ -145,11 +145,9 @@ namespace Software_Development_I
             int top = idle.FrameHeight - height;
             localBounds = new Rectangle(left, top, width, height);
 
-
             deathSound = Level.Content.Load<SoundEffect>("Sounds/death");
 
             Reset(position);
-
         } //end Player
 
         /// <summary>
@@ -190,7 +188,6 @@ namespace Software_Development_I
 
             movement = 0.0f;
             jumping = false;
-
         } //end Update
 
         /// <summary>
@@ -304,6 +301,7 @@ namespace Software_Development_I
             grounded = false;
 
             for (int y = topTile; y <= bottomTile; ++y)
+            {
                 for (int x = leftTile; x <= rightTile; ++x)
                 {
                     TileCollision collision = Level.GetCollision(x, y);
@@ -332,7 +330,7 @@ namespace Software_Development_I
                                 if (collision == TileCollision.Hurt)
                                 {
                                     Position = new Vector2(Position.X, Position.Y + intersectDepth.Y);
-                                    
+
                                     playerBounds = BoundingBox;
 
                                     takeDamage(1);
@@ -353,19 +351,21 @@ namespace Software_Development_I
                                 {
                                     Position = new Vector2(Position.X + intersectDepth.X, Position.Y);
                                     playerBounds = BoundingBox;
-                                    
-                                        takeDamage(1);
-                                        lastDamage = totalTime;
-                                    
+
+                                    takeDamage(1);
+                                    lastDamage = totalTime;
+
                                 } //end if
-                                
+
                             } //end else
                         } //end if
                     } //end if
                 } //end for
-            lastBottom = playerBounds.Bottom;
+            } // End for
 
+            lastBottom = playerBounds.Bottom;
         } //end HandleCollsions
+
         #endregion
 
         #region Player Events

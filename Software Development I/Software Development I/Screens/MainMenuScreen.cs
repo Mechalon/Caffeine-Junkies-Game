@@ -20,9 +20,6 @@ namespace Software_Development_I
     {
         #region Initialization
 
-        static int loadLevelNumber = 0;
-
-
         /// <summary>
         /// Constructor fills in the menu contents.
         /// </summary>
@@ -45,11 +42,9 @@ namespace Software_Development_I
             MenuEntries.Add(exitMenuEntry);
         }
 
-
         #endregion
 
         #region Handle Input
-
 
         /// <summary>
         /// Event handler for when the Play Game menu entry is selected.
@@ -60,7 +55,6 @@ namespace Software_Development_I
                                new GameplayScreen());
         }
 
-
         /// <summary>
         /// Event handler for when the Options menu entry is selected.
         /// </summary>
@@ -68,7 +62,6 @@ namespace Software_Development_I
         {
             ScreenManager.AddScreen(new OptionsMenuScreen(), e.PlayerIndex);
         }
-
 
         /// <summary>
         /// When the user cancels the main menu, ask if they want to exit the sample.
@@ -84,7 +77,6 @@ namespace Software_Development_I
             ScreenManager.AddScreen(confirmExitMessageBox, playerIndex);
         }
 
-
         /// <summary>
         /// Event handler for when the user selects ok on the "are you sure
         /// you want to exit" message box.
@@ -93,7 +85,6 @@ namespace Software_Development_I
         {
             ScreenManager.Game.Exit();
         }
-
 
         #endregion
     }

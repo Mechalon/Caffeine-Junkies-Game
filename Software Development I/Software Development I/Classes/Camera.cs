@@ -3,7 +3,9 @@
  * Camera.cs
  * Created by Forrest
  */
+
 #endregion
+
 using Microsoft.Xna.Framework;
 
 namespace Software_Development_I
@@ -53,6 +55,5 @@ namespace Software_Development_I
             Camera.worldHeight = levelMap.mapHeight * Tile.HEIGHT;
             Camera.location = Vector2.Zero;
         } //end InitializeLevel
-
     } //end class Camera
 } //end namespace

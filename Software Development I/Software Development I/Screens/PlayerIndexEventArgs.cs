@@ -28,7 +28,6 @@ namespace Software_Development_I
             this.playerIndex = playerIndex;
         }
 
-
         /// <summary>
         /// Gets the index of the player who triggered this event.
         /// </summary>

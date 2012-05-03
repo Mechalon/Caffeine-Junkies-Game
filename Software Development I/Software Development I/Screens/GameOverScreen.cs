@@ -21,7 +21,6 @@ namespace Software_Development_I
     {
         #region Initialization
 
-
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -58,7 +57,6 @@ namespace Software_Development_I
 
             ScreenManager.AddScreen(confirmQuitMessageBox, ControllingPlayer);
         }
-
 
         /// <summary>
         /// Event handler for when the user selects ok on the "are you sure

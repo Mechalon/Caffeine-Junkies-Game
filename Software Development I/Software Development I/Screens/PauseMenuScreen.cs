@@ -21,7 +21,6 @@ namespace Software_Development_I
     {
         #region Initialization
 
-
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -41,11 +40,9 @@ namespace Software_Development_I
             MenuEntries.Add(quitGameMenuEntry);
         }
 
-
         #endregion
 
         #region Handle Input
-
 
         /// <summary>
         /// Event handler for when the Quit Game menu entry is selected.
@@ -61,7 +58,6 @@ namespace Software_Development_I
             ScreenManager.AddScreen(confirmQuitMessageBox, ControllingPlayer);
         }
 
-
         /// <summary>
         /// Event handler for when the user selects ok on the "are you sure
         /// you want to quit" message box. This uses the loading screen to
@@ -72,7 +68,6 @@ namespace Software_Development_I
             LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),
                                                            new MainMenuScreen());
         }
-
 
         #endregion
     }

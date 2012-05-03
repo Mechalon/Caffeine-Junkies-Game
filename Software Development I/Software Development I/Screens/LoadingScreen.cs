@@ -42,7 +42,6 @@ namespace Software_Development_I
 
         #region Initialization
 
-
         /// <summary>
         /// The constructor is private: loading screens should
         /// be activated via the static Load method instead.
@@ -55,7 +54,6 @@ namespace Software_Development_I
 
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
         }
-
 
         /// <summary>
         /// Activates the loading screen.
@@ -76,11 +74,9 @@ namespace Software_Development_I
             screenManager.AddScreen(loadingScreen, controllingPlayer);
         }
 
-
         #endregion
 
         #region Update and Draw
-
 
         /// <summary>
         /// Updates the loading screen.
@@ -110,7 +106,6 @@ namespace Software_Development_I
                 ScreenManager.Game.ResetElapsedTime();
             }
         }
-
 
         /// <summary>
         /// Draws the loading screen.
@@ -155,7 +150,6 @@ namespace Software_Development_I
                 spriteBatch.End();
             }
         }
-
 
         #endregion
     }

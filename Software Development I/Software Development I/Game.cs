@@ -27,7 +27,6 @@ namespace Software_Development_I
         GraphicsDeviceManager graphics;
         ScreenManager screenManager;
 
-
         // By preloading any assets used by UI rendering, we avoid framerate glitches
         // when they suddenly need to be loaded in the middle of a menu transition.
         static readonly string[] preloadAssets =
@@ -35,11 +34,9 @@ namespace Software_Development_I
             "Backgrounds/gradient",
         };
 
-
         #endregion
 
         #region Initialization
-
 
         /// <summary>
         /// The main game constructor.
@@ -52,6 +49,7 @@ namespace Software_Development_I
 
             DisplayMode displayMode = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode;
 
+            // Set the resolution to be displayed
             if (displayMode.Height == 768)
             {
                 graphics.PreferredBackBufferWidth = 1024;
@@ -86,8 +84,6 @@ namespace Software_Development_I
             screenManager.AddScreen(new MainMenuScreen(), null);
 
             Camera.InitializeScreen(graphics);
-
-            //Accelerometer.Initialize();
         }
 
         /// <summary>
@@ -104,7 +100,6 @@ namespace Software_Development_I
         #endregion
 
         #region Draw
-
 
         /// <summary>
         /// This is called when the game should draw itself.

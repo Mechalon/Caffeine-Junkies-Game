@@ -27,7 +27,6 @@ namespace Software_Development_I
         Hidden,
     }
 
-
     /// <summary>
     /// A screen is a single layer that has update and draw logic, and which
     /// can be combined with other layers to build up a complex menu system.
@@ -38,7 +37,6 @@ namespace Software_Development_I
     public abstract class GameScreen
     {
         #region Properties
-
 
         /// <summary>
         /// Normally when one screen is brought up over the top of another,
@@ -55,7 +53,6 @@ namespace Software_Development_I
 
         bool isPopup = false;
 
-
         /// <summary>
         /// Indicates how long the screen takes to
         /// transition on when it is activated.
@@ -68,7 +65,6 @@ namespace Software_Development_I
 
         TimeSpan transitionOnTime = TimeSpan.Zero;
 
-
         /// <summary>
         /// Indicates how long the screen takes to
         /// transition off when it is deactivated.
@@ -80,7 +76,6 @@ namespace Software_Development_I
         }
 
         TimeSpan transitionOffTime = TimeSpan.Zero;
-
 
         /// <summary>
         /// Gets the current position of the screen transition, ranging
@@ -95,7 +90,6 @@ namespace Software_Development_I
 
         float transitionPosition = 1;
 
-
         /// <summary>
         /// Gets the current alpha of the screen transition, ranging
         /// from 1 (fully active, no transition) to 0 (transitioned
@@ -105,7 +99,6 @@ namespace Software_Development_I
         {
             get { return 1f - TransitionPosition; }
         }
-
 
         /// <summary>
         /// Gets the current screen transition state.
@@ -117,7 +110,6 @@ namespace Software_Development_I
         }
 
         ScreenState screenState = ScreenState.TransitionOn;
-
 
         /// <summary>
         /// There are two possible reasons why a screen might be transitioning
@@ -135,7 +127,6 @@ namespace Software_Development_I
 
         bool isExiting = false;
 
-
         /// <summary>
         /// Checks whether this screen is active and can respond to user input.
         /// </summary>
@@ -151,7 +142,6 @@ namespace Software_Development_I
 
         bool otherScreenHasFocus;
 
-
         /// <summary>
         /// Gets the manager that this screen belongs to.
         /// </summary>
@@ -162,7 +152,6 @@ namespace Software_Development_I
         }
 
         ScreenManager screenManager;
-
 
         /// <summary>
         /// Gets the index of the player who is currently controlling this screen,
@@ -179,7 +168,6 @@ namespace Software_Development_I
         }
 
         PlayerIndex? controllingPlayer;
-
 
         /// <summary>
         /// Gets the gestures the screen is interested in. Screens should be as specific
@@ -207,28 +195,23 @@ namespace Software_Development_I
 
         GestureType enabledGestures = GestureType.None;
 
-
         #endregion
 
         #region Initialization
-
 
         /// <summary>
         /// Load graphics content for the screen.
         /// </summary>
         public virtual void LoadContent() { }
 
-
         /// <summary>
         /// Unload content for the screen.
         /// </summary>
         public virtual void UnloadContent() { }
 
-
         #endregion
 
         #region Update and Draw
-
 
         /// <summary>
         /// Allows the screen to run logic, such as updating the transition position.
@@ -281,7 +264,6 @@ namespace Software_Development_I
             }
         }
 
-
         /// <summary>
         /// Helper for updating the screen transition position.
         /// </summary>
@@ -311,7 +293,6 @@ namespace Software_Development_I
             return true;
         }
 
-
         /// <summary>
         /// Allows the screen to handle user input. Unlike Update, this method
         /// is only called when the screen is active, and not when some other
@@ -319,17 +300,14 @@ namespace Software_Development_I
         /// </summary>
         public virtual void HandleInput(InputState input) { }
 
-
         /// <summary>
         /// This is called when the screen should draw itself.
         /// </summary>
         public virtual void Draw(GameTime gameTime) { }
 
-
         #endregion
 
         #region Public Methods
-
 
         /// <summary>
         /// Tells the screen to go away. Unlike ScreenManager.RemoveScreen, which
@@ -349,7 +327,6 @@ namespace Software_Development_I
                 isExiting = true;
             }
         }
-
 
         #endregion
     }

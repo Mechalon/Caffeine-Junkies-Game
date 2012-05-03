@@ -28,7 +28,6 @@ namespace Software_Development_I
 
         #region Initialization
 
-
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -51,7 +50,6 @@ namespace Software_Development_I
             MenuEntries.Add(back);
         }
 
-
         /// <summary>
         /// Fills in the latest values for the options screen menu text.
         /// </summary>
@@ -60,11 +58,9 @@ namespace Software_Development_I
             levelSelectEntry.Text = "Select level: " + GameOptions.levelSelected;
         }
 
-
         #endregion
 
         #region Handle Input
-
 
         /// <summary>
         /// Event handler for when the Level select menu entry is selected.

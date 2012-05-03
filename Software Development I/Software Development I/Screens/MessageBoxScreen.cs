@@ -38,7 +38,6 @@ namespace Software_Development_I
 
         #region Initialization
 
-
         /// <summary>
         /// Constructor automatically includes the standard "A=ok, B=cancel"
         /// usage text prompt.
@@ -46,7 +45,6 @@ namespace Software_Development_I
         public MessageBoxScreen(string message)
             : this(message, true)
         { }
-
 
         /// <summary>
         /// Constructor lets the caller specify whether to include the standard
@@ -74,7 +72,6 @@ namespace Software_Development_I
             TransitionOffTime = TimeSpan.FromSeconds(0.2);
         }
 
-
         /// <summary>
         /// Loads graphics content for this screen. This uses the shared ContentManager
         /// provided by the Game class, so the content will remain loaded forever.
@@ -88,11 +85,9 @@ namespace Software_Development_I
             gradientTexture = content.Load<Texture2D>("Backgrounds/gradient");
         }
 
-
         #endregion
 
         #region Handle Input
-
 
         /// <summary>
         /// Responds to user input, accepting or cancelling the message box.
@@ -124,11 +119,9 @@ namespace Software_Development_I
             }
         }
 
-
         #endregion
 
         #region Draw
-
 
         /// <summary>
         /// Draws the message box.
@@ -169,7 +162,6 @@ namespace Software_Development_I
 
             spriteBatch.End();
         }
-
 
         #endregion
     }

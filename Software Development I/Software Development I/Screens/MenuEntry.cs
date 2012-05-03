@@ -48,7 +48,6 @@ namespace Software_Development_I
 
         #region Properties
 
-
         /// <summary>
         /// Gets or sets the text of this menu entry.
         /// </summary>
@@ -57,7 +56,6 @@ namespace Software_Development_I
             get { return text; }
             set { text = value; }
         }
-
 
         /// <summary>
         /// Gets or sets the position at which to draw this menu entry.
@@ -68,17 +66,14 @@ namespace Software_Development_I
             set { position = value; }
         }
 
-
         #endregion
 
         #region Events
-
 
         /// <summary>
         /// Event raised when the menu entry is selected.
         /// </summary>
         public event EventHandler<PlayerIndexEventArgs> Selected;
-
 
         /// <summary>
         /// Method for raising the Selected event.
@@ -89,11 +84,9 @@ namespace Software_Development_I
                 Selected(this, new PlayerIndexEventArgs(playerIndex));
         }
 
-
         #endregion
 
         #region Initialization
-
 
         /// <summary>
         /// Constructs a new menu entry with the specified text.
@@ -103,11 +96,9 @@ namespace Software_Development_I
             this.text = text;
         }
 
-
         #endregion
 
         #region Update and Draw
-
 
         /// <summary>
         /// Updates the menu entry.
@@ -130,7 +121,6 @@ namespace Software_Development_I
             else
                 selectionFade = Math.Max(selectionFade - fadeSpeed, 0);
         }
-
 
         /// <summary>
         /// Draws the menu entry. This can be overridden to customize the appearance.
@@ -167,7 +157,6 @@ namespace Software_Development_I
                                    origin, scale, SpriteEffects.None, 0);
         }
 
-
         /// <summary>
         /// Queries how much space this menu entry requires.
         /// </summary>
@@ -176,7 +165,6 @@ namespace Software_Development_I
             return screen.ScreenManager.Font.LineSpacing;
         }
 
-
         /// <summary>
         /// Queries how wide the entry is, used for centering on the screen.
         /// </summary>
@@ -184,7 +172,6 @@ namespace Software_Development_I
         {
             return (int)screen.ScreenManager.Font.MeasureString(Text).X;
         }
-
 
         #endregion
     }

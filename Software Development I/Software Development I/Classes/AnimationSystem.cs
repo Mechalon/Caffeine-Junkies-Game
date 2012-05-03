@@ -3,7 +3,9 @@
  * AnimationSystem.cs
  * Created by Forrest
  */
+
 #endregion
+
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -76,7 +78,6 @@ namespace Software_Development_I
                 Rectangle source = new Rectangle(FrameIndex * Animation.Texture.Height, 0, Animation.Texture.Height, Animation.Texture.Height);
 
                 spriteBatch.Draw(Animation.Texture, position, source, Color.White, 0.0f, Origin, 1.0f, spriteEffects, 0.0f);
-                
             } //end if
         } //end Draw
     } //end AnimationPlayer

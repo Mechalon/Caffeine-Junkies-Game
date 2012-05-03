@@ -34,7 +34,6 @@ namespace Software_Development_I
 
         #region Properties
 
-
         /// <summary>
         /// Gets the list of menu entries, so derived classes can add
         /// or change the menu contents.
@@ -43,12 +42,9 @@ namespace Software_Development_I
         {
             get { return menuEntries; }
         }
-
-
         #endregion
 
         #region Initialization
-
 
         /// <summary>
         /// Constructor.
@@ -61,11 +57,9 @@ namespace Software_Development_I
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
 
-
         #endregion
 
         #region Handle Input
-
 
         /// <summary>
         /// Responds to user input, changing the selected entry and accepting
@@ -108,7 +102,6 @@ namespace Software_Development_I
             }
         }
 
-
         /// <summary>
         /// Handler for when the user has chosen a menu entry.
         /// </summary>
@@ -116,7 +109,6 @@ namespace Software_Development_I
         {
             menuEntries[entryIndex].OnSelectEntry(playerIndex);
         }
-
 
         /// <summary>
         /// Handler for when the user has cancelled the menu.
@@ -126,7 +118,6 @@ namespace Software_Development_I
             ExitScreen();
         }
 
-
         /// <summary>
         /// Helper overload makes it easy to use OnCancel as a MenuEntry event handler.
         /// </summary>
@@ -135,11 +126,9 @@ namespace Software_Development_I
             OnCancel(e.PlayerIndex);
         }
 
-
         #endregion
 
         #region Update and Draw
-
 
         /// <summary>
         /// Allows the screen the chance to position the menu entries. By default
@@ -176,7 +165,6 @@ namespace Software_Development_I
             }
         }
 
-
         /// <summary>
         /// Updates the menu.
         /// </summary>
@@ -193,7 +181,6 @@ namespace Software_Development_I
                 menuEntries[i].Update(this, isSelected, gameTime);
             }
         }
-
 
         /// <summary>
         /// Draws the menu.
@@ -237,7 +224,6 @@ namespace Software_Development_I
 
             spriteBatch.End();
         }
-
 
         #endregion
     }

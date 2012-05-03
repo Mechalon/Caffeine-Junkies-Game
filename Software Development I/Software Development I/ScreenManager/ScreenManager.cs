@@ -46,7 +46,6 @@ namespace Software_Development_I
 
         #region Properties
 
-
         /// <summary>
         /// A default SpriteBatch shared by all the screens. This saves
         /// each screen having to bother creating their own local instance.
@@ -56,7 +55,6 @@ namespace Software_Development_I
             get { return spriteBatch; }
         }
 
-
         /// <summary>
         /// A default font shared by all the screens. This saves
         /// each screen having to bother loading their own local copy.
@@ -65,7 +63,6 @@ namespace Software_Development_I
         {
             get { return font; }
         }
-
 
         /// <summary>
         /// If true, the manager prints out a list of all the screens
@@ -78,11 +75,9 @@ namespace Software_Development_I
             set { traceEnabled = value; }
         }
 
-
         #endregion
 
         #region Initialization
-
 
         /// <summary>
         /// Constructs a new screen manager component.
@@ -95,7 +90,6 @@ namespace Software_Development_I
             TouchPanel.EnabledGestures = GestureType.None;
         }
 
-
         /// <summary>
         /// Initializes the screen manager component.
         /// </summary>
@@ -105,7 +99,6 @@ namespace Software_Development_I
 
             isInitialized = true;
         }
-
 
         /// <summary>
         /// Load your graphics content.
@@ -126,7 +119,6 @@ namespace Software_Development_I
             }
         }
 
-
         /// <summary>
         /// Unload your graphics content.
         /// </summary>
@@ -139,11 +131,9 @@ namespace Software_Development_I
             }
         }
 
-
         #endregion
 
         #region Update and Draw
-
 
         /// <summary>
         /// Allows each screen to run logic.
@@ -198,7 +188,6 @@ namespace Software_Development_I
                 TraceScreens();
         }
 
-
         /// <summary>
         /// Prints a list of all the screens, for debugging.
         /// </summary>
@@ -211,7 +200,6 @@ namespace Software_Development_I
 
             Debug.WriteLine(string.Join(", ", screenNames.ToArray()));
         }
-
 
         /// <summary>
         /// Tells each screen to draw itself.
@@ -227,12 +215,10 @@ namespace Software_Development_I
             }
         }
 
-
         #endregion
 
         #region Public Methods
-
-
+        
         /// <summary>
         /// Adds a new screen to the screen manager.
         /// </summary>
@@ -253,7 +239,6 @@ namespace Software_Development_I
             // update the TouchPanel to respond to gestures this screen is interested in
             TouchPanel.EnabledGestures = screen.EnabledGestures;
         }
-
 
         /// <summary>
         /// Removes a screen from the screen manager. You should normally
@@ -280,7 +265,6 @@ namespace Software_Development_I
             }
         }
 
-
         /// <summary>
         /// Expose an array holding all the screens. We return a copy rather
         /// than the real master list, because screens should only ever be added
@@ -290,7 +274,6 @@ namespace Software_Development_I
         {
             return screens.ToArray();
         }
-
 
         /// <summary>
         /// Helper draws a translucent black fullscreen sprite, used for fading
@@ -308,7 +291,6 @@ namespace Software_Development_I
 
             spriteBatch.End();
         }
-
 
         #endregion
     }
