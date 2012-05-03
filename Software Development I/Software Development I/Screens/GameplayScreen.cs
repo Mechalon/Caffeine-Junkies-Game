@@ -27,6 +27,7 @@ namespace Software_Development_I
 
         float pauseAlpha;
         private Texture2D lifeIcon;
+        private Texture2D heart;
 
         //Global content
         private SpriteFont hudFont;
@@ -69,7 +70,9 @@ namespace Software_Development_I
             //Load fonts
             hudFont = Content.Load<SpriteFont>("Fonts/hud");
 
+            // Load Icons
             lifeIcon = Content.Load<Texture2D>("Sprites/Player/lifeIco");
+            heart = Content.Load<Texture2D>("Sprites/Player/heart");
 
             //Load overlays
             //winOverlay = Content.Load<Texture2D>("Overlays/win");
@@ -95,12 +98,18 @@ namespace Software_Development_I
         public void LoadNextLevel()
         {
             //Set the next level
+            int oldLives = 3; //variable used to set lives, by default is 3
             levelIndex = (levelIndex + 1) % numberOfLevels;
 
             if (level != null)
                 level.Dispose();
 
+            if (levelIndex > 0) //if this isn't the starting level, set lives to equal the old ones
+                oldLives = level.Player.Lives;
+
             level = new Level(ScreenManager.Game.Services, levelIndex);
+
+            level.Player.addLives(oldLives); //set the lives
 
         } //end LoadNextLevel()
 
@@ -212,6 +221,7 @@ namespace Software_Development_I
             int width = lifeIcon.Width;
             int height = lifeIcon.Height;
             int left = titleSafeArea.Left;
+            int hearts = level.Player.Health;
 #if WINDOWS
             int top = titleSafeArea.Bottom - 30;
             Vector2 lifeLocation = new Vector2(titleSafeArea.Left + width + 5, titleSafeArea.Bottom - 30);
@@ -223,9 +233,10 @@ namespace Software_Development_I
             Rectangle iconLocation = new Rectangle(left, top, width, height);
             string livesRemaining = "x " + level.Player.Lives.ToString();
 
-            spriteBatch.Draw(lifeIcon, iconLocation, Color.White);
-
-            spriteBatch.DrawString(hudFont, livesRemaining, lifeLocation, Color.White);
+            spriteBatch.Draw(lifeIcon, new Vector2(20, 20), Color.White);
+            spriteBatch.DrawString(hudFont, livesRemaining, new Vector2(20 + lifeIcon.Width, 20), Color.White);
+            for (int x = 0; x < hearts; x++)
+                spriteBatch.Draw(heart, new Vector2(20 + x * heart.Width, 50), Color.White);
         } //end DrawHud
 
     } //end NinjaGame

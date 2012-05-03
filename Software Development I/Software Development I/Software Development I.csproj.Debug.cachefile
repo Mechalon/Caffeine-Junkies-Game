@@ -1,5 +1,4 @@
 Content\Tiles\tiles.xnb
-Content\Tiles\tilesred.xnb
 Content\Sprites\Player\Win.xnb
 Content\Sprites\Player\Die.xnb
 Content\Sprites\Player\Idle.xnb
@@ -13,5 +12,7 @@ Content\Fonts\menufont.xnb
 Content\Backgrounds\blank.xnb
 Content\Backgrounds\background.xnb
 Content\Fonts\gamefont.xnb
+Content\Sprites\Player\freeLife.xnb
+Content\Sprites\Player\heart.xnb
 Content\Levels\0.map
 Content\Levels\1.map

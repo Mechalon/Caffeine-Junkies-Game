@@ -36,9 +36,9 @@ namespace Software_Development_I
         Platform = 3,
 
         /// <summary>
-        /// Tile that kills a player.
+        /// Tile that hurts a player.
         /// </summary>
-        Death = 4,
+        Hurt = 4,
     } //end TileCollision
 
     class Tile

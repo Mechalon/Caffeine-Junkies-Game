@@ -9,27 +9,35 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Mixed Platforms = Debug|Mixed Platforms
 		Debug|Win32 = Debug|Win32
+		Debug|Windows Phone = Debug|Windows Phone
 		Debug|x86 = Debug|x86
 		Release|Mixed Platforms = Release|Mixed Platforms
 		Release|Win32 = Release|Win32
+		Release|Windows Phone = Release|Windows Phone
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C5A15045-7F57-48B2-97E5-0D84517788C4}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{C5A15045-7F57-48B2-97E5-0D84517788C4}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{C5A15045-7F57-48B2-97E5-0D84517788C4}.Debug|Win32.ActiveCfg = Debug|x86
+		{C5A15045-7F57-48B2-97E5-0D84517788C4}.Debug|Windows Phone.ActiveCfg = Debug|x86
+		{C5A15045-7F57-48B2-97E5-0D84517788C4}.Debug|Windows Phone.Build.0 = Debug|x86
 		{C5A15045-7F57-48B2-97E5-0D84517788C4}.Debug|x86.ActiveCfg = Debug|x86
 		{C5A15045-7F57-48B2-97E5-0D84517788C4}.Debug|x86.Build.0 = Debug|x86
 		{C5A15045-7F57-48B2-97E5-0D84517788C4}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{C5A15045-7F57-48B2-97E5-0D84517788C4}.Release|Mixed Platforms.Build.0 = Release|x86
 		{C5A15045-7F57-48B2-97E5-0D84517788C4}.Release|Win32.ActiveCfg = Release|x86
+		{C5A15045-7F57-48B2-97E5-0D84517788C4}.Release|Windows Phone.ActiveCfg = Release|x86
+		{C5A15045-7F57-48B2-97E5-0D84517788C4}.Release|Windows Phone.Build.0 = Release|x86
 		{C5A15045-7F57-48B2-97E5-0D84517788C4}.Release|x86.ActiveCfg = Release|x86
 		{C5A15045-7F57-48B2-97E5-0D84517788C4}.Release|x86.Build.0 = Release|x86
 		{3E80FA6B-86E5-4B62-97F7-C72CB3125ABF}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{3E80FA6B-86E5-4B62-97F7-C72CB3125ABF}.Debug|Win32.ActiveCfg = Debug|x86
+		{3E80FA6B-86E5-4B62-97F7-C72CB3125ABF}.Debug|Windows Phone.ActiveCfg = Debug|x86
 		{3E80FA6B-86E5-4B62-97F7-C72CB3125ABF}.Debug|x86.ActiveCfg = Debug|x86
 		{3E80FA6B-86E5-4B62-97F7-C72CB3125ABF}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{3E80FA6B-86E5-4B62-97F7-C72CB3125ABF}.Release|Win32.ActiveCfg = Release|x86
+		{3E80FA6B-86E5-4B62-97F7-C72CB3125ABF}.Release|Windows Phone.ActiveCfg = Release|x86
 		{3E80FA6B-86E5-4B62-97F7-C72CB3125ABF}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

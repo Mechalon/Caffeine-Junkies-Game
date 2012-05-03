@@ -45,7 +45,7 @@ namespace Software_Development_I
             // Hook up menu event handlers.
             levelSelectEntry.Selected += levelSelectEntrySelected;
             back.Selected += OnCancel;
-            
+
             // Add entries to the menu.
             MenuEntries.Add(levelSelectEntry);
             MenuEntries.Add(back);
@@ -82,7 +82,7 @@ namespace Software_Development_I
         {
             public static int levelSelected = 1;
         }
-    
+
         #endregion
     }
 }

@@ -47,6 +47,12 @@ namespace Software_Development_I
             get { return lives; }
         }
 
+        int health;
+        public int Health
+        {
+            get { return health; }
+        }
+
         bool alive;
         public bool Alive
         {
@@ -104,6 +110,10 @@ namespace Software_Development_I
         private float lastBottom;
         private Rectangle localBounds;
 
+        //Health and Lives
+        private GameTime curTime;
+        float lastDamage = 0;
+
         #endregion
 
         #region Loading
@@ -120,7 +130,8 @@ namespace Software_Development_I
         public Player(Level level, Vector2 position)
         {
             this.level = level;
-            lives = 3;
+            health = 5;
+            curTime = new GameTime();
 
             idle = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Idle"), 0.1f, true);
             run = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Run"), 0.1f, true);
@@ -202,7 +213,8 @@ namespace Software_Development_I
 
             //checks for jumps
             jumping = gamePadState.IsButtonDown(Buttons.A) ||
-                      keyboardState.IsKeyDown(Keys.Space);
+                      keyboardState.IsKeyDown(Keys.Space) ||
+                      keyboardState.IsKeyDown(Keys.Down);
         } //end GetInput
 
         /// <summary>
@@ -287,6 +299,7 @@ namespace Software_Development_I
             int rightTile = (int)Math.Ceiling(((float)playerBounds.Right / Tile.WIDTH)) - 1;
             int topTile = (int)Math.Floor((float)playerBounds.Top / Tile.HEIGHT);
             int bottomTile = (int)Math.Ceiling(((float)playerBounds.Bottom / Tile.HEIGHT)) - 1;
+            float totalTime = (float)curTime.ElapsedGameTime.TotalSeconds;
 
             grounded = false;
 
@@ -314,13 +327,39 @@ namespace Software_Development_I
                                 {
                                     Position = new Vector2(Position.X, Position.Y + intersectDepth.Y);
                                     playerBounds = BoundingBox;
-                                } //endif
+                                } //end if
+
+                                if (collision == TileCollision.Hurt)
+                                {
+                                    Position = new Vector2(Position.X, Position.Y + intersectDepth.Y);
+                                    
+                                    playerBounds = BoundingBox;
+
+                                    takeDamage(1);
+                                    lastDamage = totalTime;
+                                } //end if
                             } //end if
-                            else if (collision == TileCollision.Impassable)
+
+                            else
                             {
-                                Position = new Vector2(Position.X + intersectDepth.X, Position.Y);
-                                playerBounds = BoundingBox;
-                            } //end if
+                                if (collision == TileCollision.Impassable)
+                                {
+                                    Position = new Vector2(Position.X + intersectDepth.X, Position.Y);
+                                    playerBounds = BoundingBox;
+                                    //if (velocity.Y == MAXFALLSPEED) takeDamage(1); damage if the player falls too fast?
+                                } //end if
+
+                                if (collision == TileCollision.Hurt)
+                                {
+                                    Position = new Vector2(Position.X + intersectDepth.X, Position.Y);
+                                    playerBounds = BoundingBox;
+                                    
+                                        takeDamage(1);
+                                        lastDamage = totalTime;
+                                    
+                                } //end if
+                                
+                            } //end else
                         } //end if
                     } //end if
                 } //end for
@@ -331,6 +370,23 @@ namespace Software_Development_I
 
         #region Player Events
 
+        public void takeDamage(int damage)
+        {
+            health -= damage; //player loses life equal to damage
+            if (health <= 0)
+                OnDeath();  //if health is gone, kill the player
+        }
+
+        public void knockBack(int push)
+        {
+            movement = push;
+        }
+
+        public void addLives(int x)
+        {
+            lives += x;
+        }
+
         /// <summary>
         /// Called when the player is killed. By enemy or falling.
         /// </summary>
@@ -339,7 +395,7 @@ namespace Software_Development_I
         {
             alive = false;
             lives--;
-
+            health = 5;
             deathSound.Play();
 
             sprite.PlayAnimation(death);

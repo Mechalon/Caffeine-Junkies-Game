@@ -100,6 +100,11 @@ namespace Software_Development_I
 
                                         switch (check)
                                         {
+                                            case 'T':
+                                                rows[curY - 1].columns[i].tileID = 4;
+                                                rows[curY - 1].columns[i].collision = TileCollision.Hurt;
+                                                //level.setCactus(curX, curY - 1);
+                                                break;
                                             case 'S':
                                                 rows[curY - 1].columns[i].tileID = 0;
                                                 rows[curY - 1].columns[i].collision = TileCollision.Passable;
@@ -111,9 +116,14 @@ namespace Software_Development_I
                                                 level.SetCheck(curX, curY - 1);
                                                 break;
                                             case 'X':
-                                                rows[curY - 1].columns[i].tileID = 3;
+                                                rows[curY - 1].columns[i].tileID = 8;
                                                 rows[curY - 1].columns[i].collision = TileCollision.Passable;
                                                 level.SetEnd(curX, curY - 1);
+                                                break;
+                                            case 'L':
+                                                rows[curY - 1].columns[i].tileID = 9;
+                                                rows[curY - 1].columns[i].collision = TileCollision.Passable;
+                                                level.oneUp(curX, curY - 1);
                                                 break;
                                             default:
                                                 break;

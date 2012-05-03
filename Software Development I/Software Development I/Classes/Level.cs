@@ -43,6 +43,7 @@ namespace Software_Development_I
         private Vector2 checkVec = new Vector2(-1, -1);
         private Point checkPoint = new Point(-1, -1);
         private Point end = new Point(-1, -1);
+        private Point freeLife = new Point(-1, -1);
 
         #endregion
 
@@ -65,10 +66,6 @@ namespace Software_Development_I
             //Load level map
             levelMap = new TileMap(this, levelIndex, content.Load<Texture2D>("Tiles/tiles"));
 
-
-            //Load sounds
-            //exampleSound = content.Load<SoundEffect>("Sounds/example");
-
             //Initialize Camera
             Camera.InitializeLevel(levelMap);
             player = new Player(this, start);
@@ -89,6 +86,11 @@ namespace Software_Development_I
         {
             end = GetBounds(x, y).Center;
         } //end SetExit
+
+        public void oneUp(int x, int y)
+        {
+            freeLife = GetBounds(x, y).Center;
+        }
 
         /// <summary>
         /// Garbage collection for current level content
@@ -135,20 +137,26 @@ namespace Software_Development_I
                 {
                     Player.Update(gameTime, keyboardState, gamePadState);
 
-
                     if (Player.BoundingBox.Top >= Camera.worldHeight)
                         Player.OnDeath();
 
                     UpdateEnemies(gameTime);
 
                     if (Player.Alive && Player.BoundingBox.Contains(checkPoint))
+                    {
+                        levelMap.rows[checkPoint.Y / Tile.HEIGHT].columns[checkPoint.X / Tile.WIDTH].tileID = 5;
                         start = checkVec;
+                    }
 
                     if (Player.Alive && Player.Grounded && Player.BoundingBox.Contains(end))
                         OnEndReached();
 
-
-
+                    if (Player.Alive && Player.BoundingBox.Contains(freeLife))
+                    {
+                        levelMap.rows[freeLife.Y / Tile.HEIGHT].columns[freeLife.X / Tile.WIDTH].tileID = 0;
+                        Player.addLives(1);
+                        freeLife = new Point(-1, -1);
+                    }
                 } //end else
 
         } //end Update

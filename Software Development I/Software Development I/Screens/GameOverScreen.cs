@@ -41,11 +41,9 @@ namespace Software_Development_I
             MenuEntries.Add(quitGameMenuEntry);
         }
 
-
         #endregion
 
         #region Handle Input
-
 
         /// <summary>
         /// Event handler for when the Quit Game menu entry is selected.
@@ -72,7 +70,6 @@ namespace Software_Development_I
             LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),
                                                            new MainMenuScreen());
         }
-
 
         #endregion
     }
