@@ -68,7 +68,7 @@ namespace Software_Development_I
             // Load Icons
             lifeIcon = Content.Load<Texture2D>("Sprites/Player/lifeIco");
             heart = Content.Load<Texture2D>("Sprites/Player/heart");
-            thumbstick = Content.Load<Texture2D>("Sprites/thumbstick");
+            thumbstick = Content.Load<Texture2D>("Sprites/WindowsPhone/thumbstick");
 
             try
             {
@@ -171,9 +171,18 @@ namespace Software_Development_I
 
             bool gamePadDisconnected = !gamePadState.IsConnected && input.GamePadWasConnected[playerIndex];
 
+            if (input.GamePadWasConnected[playerIndex])
+                controlCheck.wasConnected = true;
+
             if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected)
             {
                 ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
+            }
+
+            if (!gamePadState.IsConnected)
+            {
+                controlCheck.wasConnected = false;
+                input.GamePadWasConnected[playerIndex] = false;
             }
         } //end HandleInput
 
@@ -244,4 +253,9 @@ namespace Software_Development_I
                 spriteBatch.Draw(heart, new Vector2(20 + x * heart.Width, 50), Color.White);
         } //end DrawHud
     } //end NinjaGame
+
+    public static class controlCheck
+    {
+        public static bool wasConnected = false;
+    }
 } //end namespace

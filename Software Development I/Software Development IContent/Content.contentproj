@@ -54,7 +54,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sprites\thumbstick.png">
+    <Compile Include="Sprites\WindowsPhone\thumbstick.png">
       <Name>thumbstick</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>

@@ -12,6 +12,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 #endregion
 
 namespace Software_Development_I
@@ -26,6 +27,7 @@ namespace Software_Development_I
 
         string message;
         Texture2D gradientTexture;
+        string usageText;
 
         #endregion
 
@@ -53,8 +55,12 @@ namespace Software_Development_I
         public MessageBoxScreen(string message, bool includeUsageText)
         {
 #if WINDOWS
-            const string usageText = "\nA button, Space, Enter = ok" +
+            if(controlCheck.wasConnected)
+                usageText = "\nA button, Space, Enter = ok" +
                                      "\nB button, Esc = cancel"; 
+            else
+                usageText = "\nSpace, Enter = ok" +
+                     "\nEsc = cancel"; 
 #endif
 #if XBOX
             const string usageText = "\nA button = ok" +

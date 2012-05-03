@@ -74,11 +74,11 @@ namespace Software_Development_I
             SetMenuEntryText();
         }
 
+        #endregion
+
         public static class GameOptions
         {
             public static int levelSelected = 1;
         }
-
-        #endregion
     }
 }
