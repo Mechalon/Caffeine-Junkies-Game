@@ -13,6 +13,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Software_Development_I
 {
@@ -126,7 +127,13 @@ namespace Software_Development_I
         /// <summary>
         /// Updates all objects in the game world
         /// </summary>
-        public void Update(GameTime gameTime, KeyboardState keyboardState, GamePadState gamePadState)
+        public void Update(
+            GameTime gameTime,
+            KeyboardState keyboardState,
+            GamePadState gamePadState,
+            TouchCollection touchState,
+            AccelerometerState accelState,
+            DisplayOrientation orientation)
         {
             if (Player.Alive)
                 if (endReached)
@@ -135,7 +142,7 @@ namespace Software_Development_I
                 } //end if
                 else
                 {
-                    Player.Update(gameTime, keyboardState, gamePadState);
+                    Player.Update(gameTime, keyboardState, gamePadState, touchState, accelState, orientation);
 
                     if (Player.BoundingBox.Top >= Camera.worldHeight)
                         Player.OnDeath();

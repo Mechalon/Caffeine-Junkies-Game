@@ -75,6 +75,11 @@ namespace Software_Development_I
             set { traceEnabled = value; }
         }
 
+        public Texture2D BlankTexture
+        {
+            get { return blankTexture; }
+        }
+
         #endregion
 
         #region Initialization

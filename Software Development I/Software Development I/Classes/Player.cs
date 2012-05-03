@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Software_Development_I
 {
@@ -34,6 +35,9 @@ namespace Software_Development_I
         private const float GRAVITY = 3400.0f;
         private const float MAXFALLSPEED = 550.0f;
         private const float JUMPCONTROL = 0.14f;
+
+        private const float MoveStickScale = 1.0f;
+        private const float AccelerometerScale = 1.5f;
 
         Level level;
         public Level Level
@@ -171,9 +175,15 @@ namespace Software_Development_I
         /// <summary>
         /// Updates input, physics and animations for the player.
         /// </summary>
-        public void Update(GameTime gameTime, KeyboardState keyboardState, GamePadState gamePadState)
+        public void Update(
+            GameTime gameTime,
+            KeyboardState keyboardState,
+            GamePadState gamePadState,
+            TouchCollection touchState,
+            AccelerometerState accelState,
+            DisplayOrientation orientation)
         {
-            ReadInput(keyboardState, gamePadState);
+            ReadInput(keyboardState, gamePadState, touchState, accelState, orientation);
             ApplyPhysics(gameTime);
 
             Camera.Location = new Vector2(
@@ -193,14 +203,40 @@ namespace Software_Development_I
         /// <summary>
         /// Handles input for horizontal movement and jumps.
         /// </summary>
-        public void ReadInput(KeyboardState keyboardState, GamePadState gamePadState)
+        public void ReadInput(
+            KeyboardState keyboardState,
+            GamePadState gamePadState,
+            TouchCollection touchState,
+            AccelerometerState accelState,
+            DisplayOrientation orientation)
         {
             //360 Controller movements
-            movement = gamePadState.ThumbSticks.Left.X;
+            movement = gamePadState.ThumbSticks.Left.X * MoveStickScale;
+
+#if WINDOWS_PHONE
+            if (PhoneMainMenuScreen.GameOptions.controlOptions != 2)
+                movement = VirtualThumbsticks.LeftThumbstick.X * MoveStickScale;
+#endif
 
             //Stops animating in place for analog controls
             if (Math.Abs(movement) < 0.5f)
                 movement = 0.0f;
+
+#if WINDOWS_PHONE
+            if (PhoneMainMenuScreen.GameOptions.controlOptions != 1)
+            {
+                // Move the player with accelerometer
+                if (Math.Abs(accelState.Acceleration.Y) > 0.10f)
+                {
+                    // set our movement speed
+                    movement = MathHelper.Clamp(-accelState.Acceleration.Y * AccelerometerScale, -1f, 1f);
+
+                    // if we're in the LandscapeLeft orientation, we must reverse our movement
+                    if (orientation == DisplayOrientation.LandscapeRight)
+                        movement = -movement;
+                }
+            }
+#endif
 
             //Keyboard movements (overwrites analog stick)
             if (keyboardState.IsKeyDown(Keys.A) || gamePadState.IsButtonDown(Buttons.DPadLeft))
@@ -212,6 +248,20 @@ namespace Software_Development_I
             jumping = gamePadState.IsButtonDown(Buttons.A) ||
                       keyboardState.IsKeyDown(Keys.Space) ||
                       keyboardState.IsKeyDown(Keys.Down);
+#if WINDOWS_PHONE
+            if (PhoneMainMenuScreen.GameOptions.controlOptions == 2)
+            {
+                jumping = touchState.AnyTouch();
+            }
+
+            if (PhoneMainMenuScreen.GameOptions.controlOptions != 2)
+            {
+                if (VirtualThumbsticks.RightThumbstickCenter != null)
+                {
+                    jumping = true;
+                }
+            }
+#endif
         } //end GetInput
 
         /// <summary>

@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
 
 namespace Software_Development_I
@@ -24,21 +25,31 @@ namespace Software_Development_I
         ContentManager Content;
 
         float pauseAlpha;
+
         private Texture2D lifeIcon;
         private Texture2D heart;
+        private Texture2D thumbstick;
 
         //Global content
         private SpriteFont hudFont;
 
         //Meta-level game state
         private const int numberOfLevels = 2;
+#if WINDOWS || XBOX
         private int levelIndex = OptionsMenuScreen.GameOptions.levelSelected - 2;
+#endif
+#if WINDOWS_PHONE
+        private int levelIndex = PhoneMainMenuScreen.GameOptions.levelSelected - 2;
+#endif
         private Level level;
-        private bool firstRun = true;
 
         //store input states once per frame
         private GamePadState gamePadState;
         private KeyboardState keyboardState;
+        private TouchCollection touchState;
+        private AccelerometerState accelerometerState;
+
+        private bool firstRun = true;
 
         public GameplayScreen()
         {
@@ -57,6 +68,7 @@ namespace Software_Development_I
             // Load Icons
             lifeIcon = Content.Load<Texture2D>("Sprites/Player/lifeIco");
             heart = Content.Load<Texture2D>("Sprites/Player/heart");
+            thumbstick = Content.Load<Texture2D>("Sprites/thumbstick");
 
             try
             {
@@ -117,6 +129,8 @@ namespace Software_Development_I
         public override void Update(GameTime gameTime, bool otherScreenHasFocus,
                                                        bool coveredByOtherScreen)
         {
+            VirtualThumbsticks.Update();
+
             //Update level, passing GameTime and input states.
             base.Update(gameTime, otherScreenHasFocus, false);
 
@@ -127,7 +141,8 @@ namespace Software_Development_I
 
             if (IsActive)
                 //Update level, passing GameTime and input states.
-                level.Update(gameTime, keyboardState, gamePadState);
+                level.Update(gameTime, keyboardState, gamePadState, touchState,
+                         accelerometerState, ScreenManager.Game.Window.CurrentOrientation);
         } //end Update
 
         /// <summary>
@@ -139,6 +154,8 @@ namespace Software_Development_I
 
             keyboardState = input.CurrentKeyboardStates[playerIndex];
             gamePadState = input.CurrentGamePadStates[playerIndex];
+            touchState = TouchPanel.GetState();
+            accelerometerState = Accelerometer.GetState();
 
             if (level.Player.Alive && level.EndReached)
                 LoadNextLevel();
@@ -175,6 +192,22 @@ namespace Software_Development_I
             spriteBatch.Begin();
 
             level.Draw(gameTime, spriteBatch);
+
+            if (VirtualThumbsticks.LeftThumbstickCenter.HasValue)
+            {
+                spriteBatch.Draw(
+                    thumbstick,
+                    VirtualThumbsticks.LeftThumbstickCenter.Value - new Vector2(thumbstick.Width / 2f, thumbstick.Height / 2f),
+                    Color.Green);
+            }
+
+            if (VirtualThumbsticks.RightThumbstickCenter.HasValue)
+            {
+                spriteBatch.Draw(
+                    thumbstick,
+                    VirtualThumbsticks.RightThumbstickCenter.Value - new Vector2(thumbstick.Width / 2f, thumbstick.Height / 2f),
+                    Color.Blue);
+            }
 
             DrawHud(spriteBatch);
 

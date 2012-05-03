@@ -50,6 +50,13 @@ namespace Software_Development_I
             DisplayMode displayMode = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode;
 
             // Set the resolution to be displayed
+#if WINDOWS_PHONE
+            TargetElapsedTime = TimeSpan.FromTicks(333333);
+            graphics.IsFullScreen = true;
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 480;
+#endif
+#if WINDOWS || XBOX
             if (displayMode.Height == 768)
             {
                 graphics.PreferredBackBufferWidth = 1024;
@@ -73,6 +80,7 @@ namespace Software_Development_I
                     graphics.PreferredBackBufferHeight = 720;
                 }
             }
+#endif
 
             // Create the screen manager component.
             screenManager = new ScreenManager(this);
@@ -81,9 +89,15 @@ namespace Software_Development_I
 
             // Activate the first screens.
             screenManager.AddScreen(new BackgroundScreen(), null);
+#if WINDOWS || XBOX
             screenManager.AddScreen(new MainMenuScreen(), null);
+#endif
+#if WINDOWS_PHONE
+            screenManager.AddScreen(new PhoneMainMenuScreen(), null);
+#endif
 
             Camera.InitializeScreen(graphics);
+            Accelerometer.Initialize();
         }
 
         /// <summary>
